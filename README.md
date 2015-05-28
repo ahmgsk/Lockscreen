@@ -11,7 +11,7 @@
 ## Features
 
 * Requires: Android 2.1+ (API 7+).
-* Supports: Eclipse IDE; Android Studio (support is in beta).
+* Supported IDEs: Eclipse.
 * *No dependencies.*
 * Designed for both *phones and tablets*.
 * Stealth mode (invisible pattern).
