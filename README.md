@@ -1,7 +1,7 @@
 # android-lockpattern
 
 * License: [Apache License v2.0]
-* Version: `3.2.1 beta (#46)`
+* Version: `4.0.0`
 * Project page: <http://haibison.github.io/android-lockpattern/>
 * Demo: <https://play.google.com/store/apps/details?id=group.pals.android.lib.ui.lockpattern.demo>
 * For developers: [Wiki], [API documentation].
@@ -11,14 +11,15 @@
 ## Features
 
 * Requires: Android 2.1+ (API 7+).
-* Supported IDEs: Eclipse.
+* Supported IDEs: Android Studio, Eclipse.
 * *No dependencies.*
 * Designed for both *phones and tablets*.
 * Stealth mode (invisible pattern).
-* 5 built-in themes:
+* Many built-in themes:
   * Dark/Light
   * Light with dark action bar (available from API 7+, but only works from API 14+)
   * Dark/Light dialogs
+  * Dark/Light `DialogWhenLarge` (available from API 7+, but only works from API 11+)
 * Ability to generate and let the user verify CAPTCHA pattern.
 
 --
@@ -28,14 +29,14 @@ Feel free to contact us at:
 * E-mails:
     + haibison.apps[at]gmail.com
 
-In short, you can use this library in your closed source/commercial apps with
-or without our knowledge. Hope you enjoy it  :-)
+In short, you can use this library in your closed source/commercial apps with or without our knowledge. Hope you enjoy
+it  :-)
 
 
 # Credits
 
-We sincerely thank all of our friends -- who have been contributing to this
-project.  We hope this project will be always useful for everyone.
+We sincerely thank all of our friends -- who have been contributing to this project.  We hope this project will be
+always useful for everyone.
 
 * C
 * [Steven Byle](http://stackoverflow.com/users/1507439/steven-byle)
@@ -46,6 +47,12 @@ project.  We hope this project will be always useful for everyone.
 
 # History
 
+* Version 4.0.0
+    + *Release: June 20th, 2015*
+    + Switch to Gradle based (for Android Studio IDE).
+    + Update styles.
+    + Refactor some classes, resource names.
+
 * Version 3.2.1 beta (#46)
     + *Initialize: January 23rd, 2015*
 
@@ -53,12 +60,10 @@ project.  We hope this project will be always useful for everyone.
     + *Release:* January 19th, 2015
     + Update based code from AOSP Lollipop.
     + Drop support for APIs < 7.
-    + Add static helper methods for creating new `Intent`'s and calling
-      `startActivityForResult(Intent, int)` from an `Activity`, framework
-      `Fragment` or support library `Fragment`.
-    + Rename `EXTRA_INTENT_ACTIVITY_FORGOT_PATTERN` to
-      `EXTRA_PENDING_INTENT_FORGOT_PATTERN`. Note that its value type is also
-      changed from `Intent` to `PendingIntent`.
+    + Add static helper methods for creating new `Intent`'s and calling `startActivityForResult(Intent, int)` from an
+      `Activity`, framework `Fragment` or support library `Fragment`.
+    + Rename `EXTRA_INTENT_ACTIVITY_FORGOT_PATTERN` to `EXTRA_PENDING_INTENT_FORGOT_PATTERN`. Note that its value type
+      is also changed from `Intent` to `PendingIntent`.
     + Fix small issues.
 
 * Version 3.1.1 beta (#44)
@@ -81,8 +86,7 @@ project.  We hope this project will be always useful for everyone.
 
 * Version 3.0.6
     + *Release:* February 19, 2014
-    + Add support to directly configure settings via AndroidManifest.xml (tag
-      `<meta-data>`).
+    + Add support to directly configure settings via AndroidManifest.xml (tag `<meta-data>`).
 
 * Version 3.0.6 beta
     + *Initialize:* February 18, 2014
@@ -90,8 +94,7 @@ project.  We hope this project will be always useful for everyone.
 * Version 3.0.5
     + *Release:* Feburary 12, 2014
     + Add `SimpleWeakEncryption`.
-    + Update `LockPatternView` to branch `kitkat-release` (commit:
-      `c46c4a6765196bcabf3ea89771a1f9067b22baad`).
+    + Update `LockPatternView` to branch `kitkat-release` (commit: `c46c4a6765196bcabf3ea89771a1f9067b22baad`).
     + Update Javadocs, some minor changes...
 
 * Version 3.0.5 beta
@@ -100,8 +103,7 @@ project.  We hope this project will be always useful for everyone.
 * Version 3.0.4
     + *Release:* January 12, 2014
     + Refactor package `prefs` to a single class `util.Settings`.
-    + Add `LoadingDialog` for the case that implementation of `IEncrypter` takes
-      lots of time to finish.
+    + Add `LoadingDialog` for the case that implementation of `IEncrypter` takes lots of time to finish.
 
 * Version 3.0.4 beta
     + *Initialize:* January 11, 2014
@@ -132,12 +134,10 @@ project.  We hope this project will be always useful for everyone.
 
 * Version 2.8
     + *Release:* July 02, 2013
-    + Add new extra `EXTRA_INTENT_ACTIVITY_FORGOT_PATTERN` to help the user
-      recover the pattern if he/ she forgot it.
-    + Change `char[] IEncrypter.encrypt(Context, char[])` to
-      `char[] IEncrypter.encrypt(Context, List<Cell>)`.
-    + Rename `EXTRA_OK_PENDING_INTENT`, `EXTRA_CANCELLED_PENDING_INTENT` to
-      `EXTRA_PENDING_INTENT_OK` and `EXTRA_PENDING_INTENT_CANCELLED`.
+    + Add new extra `EXTRA_INTENT_ACTIVITY_FORGOT_PATTERN` to help the user recover the pattern if he/ she forgot it.
+    + Change `char[] IEncrypter.encrypt(Context, char[])` to `char[] IEncrypter.encrypt(Context, List<Cell>)`.
+    + Rename `EXTRA_OK_PENDING_INTENT`, `EXTRA_CANCELLED_PENDING_INTENT` to `EXTRA_PENDING_INTENT_OK` and
+      `EXTRA_PENDING_INTENT_CANCELLED`.
     + Optimize code.
     + Some minor changes...
 
@@ -169,13 +169,10 @@ project.  We hope this project will be always useful for everyone.
     + Upgrade UI;
     + Add options:
         - for setting minimum wired dots in mode creating pattern;
-        - for setting maximum tries and determining the number of tries that the
-          user did in mode comparing patterns;
+        - for setting maximum tries and determining the number of tries that the user did in mode comparing patterns;
         - thanks to David Myers for his feedbacks;
-    + Use fixed size for `LockPatternActivity` in large screens with dialog
-      themes;
-    + Add options for sending result to a `PendingIntent` and/ or
-      `ResultReceiver`;
+    + Use fixed size for `LockPatternActivity` in large screens with dialog themes;
+    + Add options for sending result to a `PendingIntent` and/ or `ResultReceiver`;
     + Fix minor bugs; optimize code;
 
 * Version 2.5 beta
@@ -190,26 +187,22 @@ project.  We hope this project will be always useful for everyone.
     + Add built-in themes: default dark and dark dialog;
     + Add stealth-mode;
     + New icon set;
-    + Optimize code and UI; special thanks to
-      [Steven Byle](http://stackoverflow.com/users/1507439/steven-byle):
+    + Optimize code and UI; special thanks to [Steven Byle](http://stackoverflow.com/users/1507439/steven-byle):
         - <http://stackoverflow.com/a/15424636/1521536>
 
 * Version 2.3
     + Update info: August 28, 2012
-    + The
-      [serious bug](https://code.google.com/p/android-lockpattern/issues/detail?id=1)
-      was invalid.
+    + The [serious bug](https://code.google.com/p/android-lockpattern/issues/detail?id=1) was invalid.
 
 * Version 2.3
     + *Release:* August 28, 2012
-    + Fixed serious bug: key `_PaternSha1` is deprecated but is used to return
-      the pattern;
+    + Fixed serious bug: key `_PaternSha1` is deprecated but is used to return the pattern;
     + Removed all fields/ methods which were deprecated in old versions;
 
 * Version 2.2
     + *Release:* August 17, 2012
-    + added: Spanish language; special thanks to C. - a kind friend who helped
-      us translate the library into his mother language;
+    + added: Spanish language; special thanks to C. - a kind friend who helped us translate the library into his mother
+      language;
 
 * Version 2.1
     + *Release:* July 29, 2012
@@ -233,8 +226,7 @@ project.  We hope this project will be always useful for everyone.
 
 * Version 1.5.4
     + *Release:* June 09, 2012
-    + Fix bug: in mode `CreatePattern`, `LockPatternActivity` recognized wrong
-      the confirmed pattern;
+    + Fix bug: in mode `CreatePattern`, `LockPatternActivity` recognized wrong the confirmed pattern;
 
 * Version 1.5.4 beta
     + Initialization: June 07, 2012
@@ -258,9 +250,8 @@ project.  We hope this project will be always useful for everyone.
 
 * Version 1.5
     + *Release:* May 21, 2012
-    + due to
-      [this bug](https://code.google.com/p/android/issues/detail?id=30622), so
-      we prefix all resource names with `alp_`;
+    + due to [this bug](https://code.google.com/p/android/issues/detail?id=30622), so we prefix all resource names with
+      `alp_`;
     + add layout for landscape mode;
     + update coding style:
         - prefix global fields with `m`;
