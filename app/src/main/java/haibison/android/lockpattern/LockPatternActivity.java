@@ -114,72 +114,39 @@ public class LockPatternActivity extends Activity {
      *
      * @param caller      must be an instance of {@link Activity}, or {@link Fragment} or support library's {@code
      *                    Fragment}. <b>Warning:</b> Have a look at description of {@link
-     *                    #callStartActivityForResult(Object, Intent, int)}.
+     *                    #call_startActivityForResult(Object, Intent, int)}.
      * @param context     the context.
      * @param requestCode request code for {@link Activity#startActivityForResult(Intent, int)} or counterpart methods
      *                    of fragments.
-     * @return {@code true} if the call has been made successfully, {@code false} if any exception occurred.
      * @throws NullPointerException if caller or context is {@code null}.
+     * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
      */
-    public static boolean startToCreatePattern(Object caller, Context context, int requestCode) {
-        return callStartActivityForResult(caller, newIntentToCreatePattern(context), requestCode);
+    public static void startToCreatePattern(Object caller, Context context, int requestCode) {
+        call_startActivityForResult(caller, newIntentToCreatePattern(context), requestCode);
     }// startToCreatePattern()
 
     /**
-     * This methods first tries to find and call {@code startActivityForResult(Intent, int)} from given caller.
-     * <p/>
-     * <b>WARNING:</b> If this method can't find above method from the caller, it will try to find <b><i>any</i></b>
-     * method which accepts 2 parameters as an {@link Intent} and an {@code int}, then invokes that method with given
-     * parameters. So be careful to just pass in only an instance of {@link Activity}/{@link Fragment} or support
-     * library's {@code Fragment}.
+     * This methods tries to find and call {@code startActivityForResult(Intent, int)} from given caller. Note that if
+     * you use ProGuard, it will work fine with {@link Activity} (or its descendants), framework {@link Fragment}. But
+     * it won't work with support library {@code Fragment} (or its descendants), unless you tell ProGuard to ignore it.
      *
      * @param caller      the caller.
      * @param intent      the intent.
      * @param requestCode request code.
-     * @return {@code true} if the call has been made successfully, {@code false} if any exception occurred.
      * @throws NullPointerException if caller or intent is {@code null}.
      * @throws RuntimeException     which wraps any exception while invoking original method from the caller.
      */
-    public static boolean callStartActivityForResult(Object caller, Intent intent, int requestCode) {
+    public static void call_startActivityForResult(Object caller, Intent intent, int requestCode) {
         try {
             Method method = caller.getClass().getMethod("startActivityForResult", Intent.class, int.class);
             method.setAccessible(true);
             method.invoke(caller, intent, requestCode);
-
-            return true;
-        } catch (NoSuchMethodException e) {
-            /**
-             * Perhaps ProGuard or something similar changed the method name. So we'll do it a little harder to find
-             * the method based on parameters types.
-             */
-            Method[] methods = caller.getClass().getMethods();
-            for (Method method : methods) {
-                Class<?>[] types = method.getParameterTypes();
-                if (types.length == 2 && types[0].isAssignableFrom(Intent.class)
-                        && types[1].isAssignableFrom(int.class)) {
-                    method.setAccessible(true);
-                    try {
-                        method.invoke(caller, intent, requestCode);
-                        return true;
-                    } catch (Throwable t) {
-                        Log.e(CLASSNAME, t.getMessage(), t);
-                        /**
-                         * Just re-throw it
-                         */
-                        throw new RuntimeException(t);
-                    }
-                }// if
-            }// for
         } catch (Throwable t) {
             Log.e(CLASSNAME, t.getMessage(), t);
-            /*
-             * Just re-throw it
-             */
+            // Re-throw it
             throw new RuntimeException(t);
         }
-
-        return false;
-    }// callStartActivityForResult()
+    }// call_startActivityForResult()
 
     /**
      * Use this action to compare pattern. You provide the pattern to be compared with {@link #EXTRA_PATTERN}.
@@ -224,16 +191,16 @@ public class LockPatternActivity extends Activity {
      *
      * @param caller      must be an instance of {@link Activity}, or {@link Fragment} or support library's {@code
      *                    Fragment}. <b>Warning:</b> Have a look at description of {@link
-     *                    #callStartActivityForResult(Object, Intent, int)}.
+     *                    #call_startActivityForResult(Object, Intent, int)}.
      * @param context     the context.
      * @param requestCode request code for {@link Activity#startActivityForResult(Intent, int)} or counterpart methods
      *                    of fragments.
      * @param pattern     optional, see {@link #EXTRA_PATTERN}.
-     * @return {@code true} if the call has been made successfully, {@code false} if any exception occurred.
      * @throws NullPointerException if caller or context is {@code null}.
+     * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
      */
-    public static boolean startToComparePattern(Object caller, Context context, int requestCode, char[] pattern) {
-        return callStartActivityForResult(caller, newIntentToComparePattern(context, pattern), requestCode);
+    public static void startToComparePattern(Object caller, Context context, int requestCode, char[] pattern) {
+        call_startActivityForResult(caller, newIntentToComparePattern(context, pattern), requestCode);
     }// startToComparePattern()
 
     /**
@@ -262,15 +229,15 @@ public class LockPatternActivity extends Activity {
      *
      * @param caller      must be an instance of {@link Activity}, or {@link Fragment} or support library's {@code
      *                    Fragment}. <b>Warning:</b> Have a look at description of {@link
-     *                    #callStartActivityForResult(Object, Intent, int)}.
+     *                    #call_startActivityForResult(Object, Intent, int)}.
      * @param context     the context.
      * @param requestCode request code for {@link Activity#startActivityForResult(Intent, int)} or counterpart methods
      *                    of fragments.
-     * @return {@code true} if the call has been made successfully, {@code false} if any exception occurred.
      * @throws NullPointerException if caller or context is {@code null}.
+     * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
      */
-    public static boolean startToVerifyCaptcha(Object caller, Context context, int requestCode) {
-        return callStartActivityForResult(caller, newIntentToVerifyCaptcha(context), requestCode);
+    public static void startToVerifyCaptcha(Object caller, Context context, int requestCode) {
+        call_startActivityForResult(caller, newIntentToVerifyCaptcha(context), requestCode);
     }// startToVerifyCaptcha()
 
     /**
@@ -368,7 +335,7 @@ public class LockPatternActivity extends Activity {
      *
      * @author Hai Bison
      */
-    private static enum ButtonOkCommand {
+    private enum ButtonOkCommand {
         CONTINUE, FORGOT_PATTERN, DONE
     }// ButtonOkCommand
 
@@ -377,9 +344,10 @@ public class LockPatternActivity extends Activity {
      */
     private static final long DELAY_TIME_TO_RELOAD_LOCK_PATTERN_VIEW = SECOND_IN_MILLIS;
 
-    /*
-     * FIELDS
-     */
+    /////////
+    // FIELDS
+    /////////
+
     private int mMaxRetries, mMinWiredDots, mRetryCount = 0, mCaptchaWiredDots;
     private boolean mAutoSave, mStealthMode;
     private IEncrypter mEncrypter;
@@ -387,14 +355,14 @@ public class LockPatternActivity extends Activity {
     private Intent mIntentResult;
     private LoadingView<Void, Void, Object> mLoadingView;
 
-    /*
-     * CONTROLS
-     */
+    ///////////
+    // CONTROLS
+    ///////////
+
     private TextView mTextInfo;
     private LockPatternView mLockPatternView;
     private View mFooter;
-    private Button mBtnCancel;
-    private Button mBtnConfirm;
+    private Button mBtnConfirm, mBtnCancel;
     private View mViewGroupProgressBar;
 
     @Override
