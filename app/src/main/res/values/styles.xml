@@ -223,15 +223,15 @@
              Aspect to use when drawing LockPatternView. Choices are "square"(default), "lock_width"
              or "lock_height"
         -->
-        <attr name="aspect" format="string"/>
+        <attr name="alp_42447968_aspect" format="string"/>
         <!-- Color to use when drawing LockPatternView paths. -->
-        <attr name="pathColor" format="color|reference"/>
+        <attr name="alp_42447968_pathColor" format="color|reference"/>
         <!-- The regular pattern color -->
-        <attr name="regularColor" format="color|reference"/>
+        <attr name="alp_42447968_regularColor" format="color|reference"/>
         <!-- The error color -->
-        <attr name="errorColor" format="color|reference"/>
+        <attr name="alp_42447968_errorColor" format="color|reference"/>
         <!-- The success color -->
-        <attr name="successColor" format="color|reference"/>
+        <attr name="alp_42447968_successColor" format="color|reference"/>
     </declare-styleable>
 
     <attr name="alp_42447968_button_bar_style" format="reference"/>
