@@ -1,7 +1,7 @@
 # android-lockpattern
 
 * License: [Apache License v2.0]
-* Version: `4.0.0`
+* Version: `5.0.0` (September 2nd, 2015)
 * Project page: <http://haibison.github.io/android-lockpattern/>
 * Demo: <https://play.google.com/store/apps/details?id=group.pals.android.lib.ui.lockpattern.demo>
 * For developers: [Wiki], [API documentation].
@@ -11,7 +11,7 @@
 ## Features
 
 * Requires: Android 2.1+ (API 7+).
-* Supported IDEs: Android Studio, Eclipse.
+* Supported IDE: Android Studio.
 * *No dependencies.*
 * Designed for both *phones and tablets*.
 * Stealth mode (invisible pattern).
@@ -46,6 +46,12 @@ always useful for everyone.
 
 
 # History
+
+* Version 5.0.0
+    + *Release: September 2nd, 2015*
+    + Removed support for Eclipse IDE.
+    + Refactored some resource names.
+    + Updated helper method `LockPatternActivity#call_startActivityForResult()`.
 
 * Version 4.0.0
     + *Release: June 20th, 2015*
