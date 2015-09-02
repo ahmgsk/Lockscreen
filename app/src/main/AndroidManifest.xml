@@ -15,19 +15,17 @@
    limitations under the License.
 -->
 
-<manifest package="haibison.android.lockpattern">
+<manifest
+    package="haibison.android.lockpattern"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- SAMPLE DECLARATION -->
-    <!--
     <application>
         <activity
             android:name="haibison.android.lockpattern.LockPatternActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|uiMode|screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:excludeFromRecents="true"
             android:exported="false"
             android:screenOrientation="user"
-            android:theme="@style/Alp_42447968.Theme.Light" />
+            android:theme="@style/Alp_42447968.Theme.Light"/>
     </application>
-    -->
-
 </manifest>
