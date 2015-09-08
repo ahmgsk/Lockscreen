@@ -566,17 +566,18 @@ public class LockPatternActivity extends Activity {
             }// LARGE / XLARGE
         }
 
-        /**
-         * Haptic feedback.
-         */
+        // Haptic feedback
         boolean hapticFeedbackEnabled = false;
         try {
+            /**
+             * This call requires permission WRITE_SETTINGS. Since it's not necessary, we don't need to declare that
+             * permission in manifest. Don't scare our users  :-D
+             */
             hapticFeedbackEnabled = Settings.System.getInt(getContentResolver(),
                     Settings.System.HAPTIC_FEEDBACK_ENABLED, 0) != 0;
         } catch (Throwable t) {
-            /**
-             * Ignore it.
-             */
+            // Ignore it
+            t.printStackTrace();
         }
         mLockPatternView.setTactileFeedbackEnabled(hapticFeedbackEnabled);
 
