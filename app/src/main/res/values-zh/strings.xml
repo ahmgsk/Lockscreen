@@ -15,6 +15,12 @@
    limitations under the License.
 -->
 
+<!--
+    We sincerely thanks @Damonzh, for helping us tranlate this file into his mother language.
+
+    https://github.com/Damonzh
+-->
+
 <resources>
 
     <string name="alp_42447968_cmd_confirm">确认</string>

@@ -42,6 +42,7 @@ always useful for everyone.
 * [Steven Byle](http://stackoverflow.com/users/1507439/steven-byle)
 * Thomas Breitbach
 * Yan Cheng Cheok (Project Admin of [JStock](http://jstock.sourceforge.net/))
+* [@Damonzh](https://github.com/Damonzh)
 * And others.
 
 
