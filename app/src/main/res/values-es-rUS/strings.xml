@@ -14,6 +14,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
+
+<!--
+    We sincerely thank Nikita Osipov, for helping us translate this file.
+
+    https://github.com/nikkoss
+-->
+
 <resources>
     <string name="alp_42447968_cmd_confirm">Confirmar</string>
     <string name="alp_42447968_cmd_continue">Continuar</string>

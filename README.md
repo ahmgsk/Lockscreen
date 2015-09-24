@@ -43,6 +43,7 @@ always useful for everyone.
 * Thomas Breitbach
 * Yan Cheng Cheok (Project Admin of [JStock](http://jstock.sourceforge.net/))
 * [@Damonzh](https://github.com/Damonzh)
+* [Nikita Osipov](https://github.com/nikkoss)
 * And others.
 
 
