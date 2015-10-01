@@ -86,7 +86,7 @@ public class LockPatternActivity extends Activity {
     private static final String CLASSNAME = LockPatternActivity.class.getName();
 
     /**
-     * Use this action to create new pattern. You can provide an {@link IEncrypter} with {@link
+     * Use this action to create new pattern. You can provide an {@link Encrypter} with {@link
      * Security#setEncrypterClass(android.content.Context, Class)} to improve security.
      * <p/>
      * If the user created a pattern, {@link Activity#RESULT_OK} returns with the pattern ({@link #EXTRA_PATTERN}).
