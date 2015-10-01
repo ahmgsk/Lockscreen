@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package haibison.android.lockpattern.util;
+package haibison.android.lockpattern.utils;
 
 import android.content.Context;
 import android.content.res.Resources;

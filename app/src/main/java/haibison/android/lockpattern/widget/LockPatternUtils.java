@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 
 import haibison.android.lockpattern.collect.Lists;
-import haibison.android.lockpattern.util.Randoms;
+import haibison.android.lockpattern.utils.Randoms;
 
 import static haibison.android.lockpattern.BuildConfig.DEBUG;
 

@@ -44,8 +44,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import haibison.android.lockpattern.R;
-import haibison.android.lockpattern.util.FloatAnimator;
-import haibison.android.lockpattern.util.ResourceUtils;
+import haibison.android.lockpattern.utils.FloatAnimator;
+import haibison.android.lockpattern.utils.ResourceUtils;
 
 /**
  * Displays and detects the user's unlock attempt, which is a drag of a finger across 9 regions of the screen.

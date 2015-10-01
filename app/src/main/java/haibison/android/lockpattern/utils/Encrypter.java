@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package haibison.android.lockpattern.util;
+package haibison.android.lockpattern.utils;
 
 import android.content.Context;
 
@@ -28,7 +28,7 @@ import haibison.android.lockpattern.widget.LockPatternView.Cell;
  * @author Hai Bison
  * @since v2 beta
  */
-public interface IEncrypter {
+public interface Encrypter {
 
     /**
      * Encrypts {@code pattern}.

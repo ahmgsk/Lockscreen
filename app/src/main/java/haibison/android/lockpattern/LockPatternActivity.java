@@ -43,14 +43,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import haibison.android.lockpattern.util.AlpSettings;
-import haibison.android.lockpattern.util.AlpSettings.Display;
-import haibison.android.lockpattern.util.AlpSettings.Security;
-import haibison.android.lockpattern.util.IEncrypter;
-import haibison.android.lockpattern.util.InvalidEncrypterException;
-import haibison.android.lockpattern.util.LoadingView;
-import haibison.android.lockpattern.util.ResourceUtils;
-import haibison.android.lockpattern.util.UI;
+import haibison.android.lockpattern.utils.AlpSettings;
+import haibison.android.lockpattern.utils.AlpSettings.Display;
+import haibison.android.lockpattern.utils.AlpSettings.Security;
+import haibison.android.lockpattern.utils.Encrypter;
+import haibison.android.lockpattern.utils.InvalidEncrypterException;
+import haibison.android.lockpattern.utils.LoadingView;
+import haibison.android.lockpattern.utils.ResourceUtils;
+import haibison.android.lockpattern.utils.UI;
 import haibison.android.lockpattern.widget.LockPatternUtils;
 import haibison.android.lockpattern.widget.LockPatternView;
 import haibison.android.lockpattern.widget.LockPatternView.Cell;
@@ -58,12 +58,12 @@ import haibison.android.lockpattern.widget.LockPatternView.DisplayMode;
 
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static haibison.android.lockpattern.BuildConfig.DEBUG;
-import static haibison.android.lockpattern.util.AlpSettings.Display.METADATA_CAPTCHA_WIRED_DOTS;
-import static haibison.android.lockpattern.util.AlpSettings.Display.METADATA_MAX_RETRIES;
-import static haibison.android.lockpattern.util.AlpSettings.Display.METADATA_MIN_WIRED_DOTS;
-import static haibison.android.lockpattern.util.AlpSettings.Display.METADATA_STEALTH_MODE;
-import static haibison.android.lockpattern.util.AlpSettings.Security.METADATA_AUTO_SAVE_PATTERN;
-import static haibison.android.lockpattern.util.AlpSettings.Security.METADATA_ENCRYPTER_CLASS;
+import static haibison.android.lockpattern.utils.AlpSettings.Display.METADATA_CAPTCHA_WIRED_DOTS;
+import static haibison.android.lockpattern.utils.AlpSettings.Display.METADATA_MAX_RETRIES;
+import static haibison.android.lockpattern.utils.AlpSettings.Display.METADATA_MIN_WIRED_DOTS;
+import static haibison.android.lockpattern.utils.AlpSettings.Display.METADATA_STEALTH_MODE;
+import static haibison.android.lockpattern.utils.AlpSettings.Security.METADATA_AUTO_SAVE_PATTERN;
+import static haibison.android.lockpattern.utils.AlpSettings.Security.METADATA_ENCRYPTER_CLASS;
 
 /**
  * Main activity for this library. <p> You can deliver result to {@link PendingIntent}'s and/ or {@link ResultReceiver}
@@ -350,7 +350,7 @@ public class LockPatternActivity extends Activity {
 
     private int mMaxRetries, mMinWiredDots, mRetryCount = 0, mCaptchaWiredDots;
     private boolean mAutoSave, mStealthMode;
-    private IEncrypter mEncrypter;
+    private Encrypter mEncrypter;
     private ButtonOkCommand mBtnOkCmd;
     private Intent mIntentResult;
     private LoadingView<Void, Void, Object> mLoadingView;
@@ -504,7 +504,7 @@ public class LockPatternActivity extends Activity {
 
         if (encrypterClass != null) {
             try {
-                mEncrypter = (IEncrypter) Class.forName(new String(encrypterClass), false, getClassLoader())
+                mEncrypter = (Encrypter) Class.forName(new String(encrypterClass), false, getClassLoader())
                         .newInstance();
             } catch (Throwable t) {
                 throw new InvalidEncrypterException();

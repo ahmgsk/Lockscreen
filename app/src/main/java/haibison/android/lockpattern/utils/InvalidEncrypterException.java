@@ -14,10 +14,10 @@
  *   limitations under the License.
  */
 
-package haibison.android.lockpattern.util;
+package haibison.android.lockpattern.utils;
 
 /**
- * Used to throw exception if given class is not implemented from {@link IEncrypter}.
+ * Used to throw exception if given class is not implemented from {@link Encrypter}.
  *
  * @author Hai Bison
  * @since v2 beta
