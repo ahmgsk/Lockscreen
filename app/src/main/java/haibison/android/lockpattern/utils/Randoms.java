@@ -16,6 +16,8 @@
 
 package haibison.android.lockpattern.utils;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 import java.util.Random;
 
@@ -63,6 +65,7 @@ public class Randoms {
      * @param end   the ending value.
      * @return the random integer array. If {@code end <= start}, an empty array returns.
      */
+    @NonNull
     public static int[] randIntArray(int start, int end) {
         if (end <= start) return new int[0];
 
@@ -86,6 +89,7 @@ public class Randoms {
      * @param end the ending value.
      * @return the random integer array. If {@code end <= start}, an empty array returns.
      */
+    @NonNull
     public static int[] randIntArray(int end) {
         return randIntArray(0, end);
     }// randIntArray()

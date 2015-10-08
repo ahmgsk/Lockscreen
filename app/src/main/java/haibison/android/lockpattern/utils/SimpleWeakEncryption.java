@@ -16,6 +16,9 @@
 
 package haibison.android.lockpattern.utils;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
@@ -71,8 +74,9 @@ public class SimpleWeakEncryption {
      * @return the encrypted data.
      * @throws RuntimeException which wraps the original exception related to cipher process.
      */
-    public static String encrypt(final char[] password, byte[] salt, final String data) {
-        byte[] bytes = null;
+    @NonNull
+    public static String encrypt(@NonNull final char[] password, @Nullable byte[] salt, @NonNull final String data) {
+        byte[] bytes;
         try {
             bytes = data.getBytes(UTF8);
         } catch (UnsupportedEncodingException e) {
@@ -121,7 +125,8 @@ public class SimpleWeakEncryption {
      * @return the decrypted string, or {@code null} if {@code password} is invalid.
      * @throws RuntimeException which wraps the original exception related to cipher process.
      */
-    public static String decrypt(final char[] password, byte[] salt, final String data) {
+    @NonNull
+    public static String decrypt(@NonNull final char[] password, @Nullable byte[] salt, @NonNull final String data) {
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(TRANSFORMATION);
@@ -161,7 +166,8 @@ public class SimpleWeakEncryption {
      * @return the secret key.
      * @throws RuntimeException which wraps the original exception related to cipher process.
      */
-    private static Key genKey(char[] password, byte[] salt) {
+    @NonNull
+    private static Key genKey(@NonNull char[] password, @Nullable byte[] salt) {
         SecretKeyFactory factory;
         try {
             factory = SecretKeyFactory.getInstance(SECRET_KEY_FACTORY_ALGORITHM);
@@ -194,7 +200,8 @@ public class SimpleWeakEncryption {
      * @throws RuntimeException which wraps {@link UnsupportedEncodingException} in case the system does not support
      *                          {@link #UTF8}.
      */
-    public static byte[] sha256(String s) {
+    @NonNull
+    public static byte[] sha256(@NonNull String s) {
         try {
             return sha256(s.getBytes(UTF8));
         } catch (UnsupportedEncodingException e) {
@@ -210,7 +217,8 @@ public class SimpleWeakEncryption {
      * @throws RuntimeException which wraps {@link NoSuchAlgorithmException} in case the system does not support
      *                          calculating message digest of {@link #SHA256}.
      */
-    public static byte[] sha256(byte[] bytes) {
+    @NonNull
+    public static byte[] sha256(@NonNull byte[] bytes) {
         try {
             MessageDigest md = MessageDigest.getInstance(SHA256);
             md.update(bytes);
@@ -239,7 +247,8 @@ public class SimpleWeakEncryption {
          * @param bytes the byte array.
          * @return the base-36 string representing the data given.
          */
-        public static String toBase36(byte[] bytes) {
+        @NonNull
+        public static String toBase36(@NonNull byte[] bytes) {
             return new BigInteger(bytes).toString(Character.MAX_RADIX);
         }// toBase36()
 
@@ -249,7 +258,8 @@ public class SimpleWeakEncryption {
          * @param base36 the base-36 string.
          * @return the original data.
          */
-        public static byte[] toBytes(String base36) {
+        @NonNull
+        public static byte[] toBytes(@NonNull String base36) {
             return new BigInteger(base36, Character.MAX_RADIX).toByteArray();
         }// toBytes()
 

@@ -28,6 +28,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -104,7 +106,7 @@ public class LockPatternActivity extends Activity {
      * @param context the context.
      * @return new intent.
      */
-    public static Intent newIntentToCreatePattern(Context context) {
+    public static Intent newIntentToCreatePattern(@NonNull Context context) {
         Intent result = new Intent(ACTION_CREATE_PATTERN, null, context, LockPatternActivity.class);
         return result;
     }// newIntentToCreatePattern()
@@ -121,7 +123,7 @@ public class LockPatternActivity extends Activity {
      * @throws NullPointerException if caller or context is {@code null}.
      * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
      */
-    public static void startToCreatePattern(Object caller, Context context, int requestCode) {
+    public static void startToCreatePattern(@NonNull Object caller, @NonNull Context context, int requestCode) {
         call_startActivityForResult(caller, newIntentToCreatePattern(context), requestCode);
     }// startToCreatePattern()
 
@@ -136,7 +138,7 @@ public class LockPatternActivity extends Activity {
      * @throws NullPointerException if caller or intent is {@code null}.
      * @throws RuntimeException     which wraps any exception while invoking original method from the caller.
      */
-    public static void call_startActivityForResult(Object caller, Intent intent, int requestCode) {
+    public static void call_startActivityForResult(@NonNull Object caller, @NonNull Intent intent, int requestCode) {
         try {
             Method method = caller.getClass().getMethod("startActivityForResult", Intent.class, int.class);
             method.setAccessible(true);
@@ -179,7 +181,7 @@ public class LockPatternActivity extends Activity {
      * @param pattern optional, see {@link #EXTRA_PATTERN}.
      * @return new intent.
      */
-    public static Intent newIntentToComparePattern(Context context, char[] pattern) {
+    public static Intent newIntentToComparePattern(@NonNull Context context, @Nullable char[] pattern) {
         Intent result = new Intent(ACTION_COMPARE_PATTERN, null, context, LockPatternActivity.class);
         if (pattern != null) result.putExtra(EXTRA_PATTERN, pattern);
 
@@ -199,7 +201,8 @@ public class LockPatternActivity extends Activity {
      * @throws NullPointerException if caller or context is {@code null}.
      * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
      */
-    public static void startToComparePattern(Object caller, Context context, int requestCode, char[] pattern) {
+    public static void startToComparePattern(@NonNull Object caller, @NonNull Context context, int requestCode,
+                                             @Nullable char[] pattern) {
         call_startActivityForResult(caller, newIntentToComparePattern(context, pattern), requestCode);
     }// startToComparePattern()
 
@@ -219,7 +222,7 @@ public class LockPatternActivity extends Activity {
      * @param context the context.
      * @return new intent.
      */
-    public static Intent newIntentToVerifyCaptcha(Context context) {
+    public static Intent newIntentToVerifyCaptcha(@NonNull Context context) {
         Intent result = new Intent(ACTION_VERIFY_CAPTCHA, null, context, LockPatternActivity.class);
         return result;
     }// newIntentToVerifyCaptcha()
@@ -236,7 +239,7 @@ public class LockPatternActivity extends Activity {
      * @throws NullPointerException if caller or context is {@code null}.
      * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
      */
-    public static void startToVerifyCaptcha(Object caller, Context context, int requestCode) {
+    public static void startToVerifyCaptcha(@NonNull Object caller, @NonNull Context context, int requestCode) {
         call_startActivityForResult(caller, newIntentToVerifyCaptcha(context), requestCode);
     }// startToVerifyCaptcha()
 
@@ -658,7 +661,7 @@ public class LockPatternActivity extends Activity {
      *
      * @param pattern the pattern to be compared.
      */
-    private void doComparePattern(final List<Cell> pattern) {
+    private void doComparePattern(@NonNull final List<Cell> pattern) {
         if (pattern == null) return;
 
         /**
@@ -716,7 +719,7 @@ public class LockPatternActivity extends Activity {
      *
      * @param pattern the current pattern of lock pattern view.
      */
-    private void doCheckAndCreatePattern(final List<Cell> pattern) {
+    private void doCheckAndCreatePattern(@NonNull final List<Cell> pattern) {
         if (pattern.size() < mMinWiredDots) {
             mLockPatternView.setDisplayMode(DisplayMode.Wrong);
             mTextInfo.setText(getResources().getQuantityString(
@@ -792,7 +795,7 @@ public class LockPatternActivity extends Activity {
      *
      * @param pattern the pattern, if this is in mode creating pattern. In any cases, it can be set to {@code null}.
      */
-    private void finishWithResultOk(char[] pattern) {
+    private void finishWithResultOk(@Nullable char[] pattern) {
         if (ACTION_CREATE_PATTERN.equals(getIntent().getAction()))
             mIntentResult.putExtra(EXTRA_PATTERN, pattern);
         else {

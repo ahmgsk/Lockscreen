@@ -19,6 +19,9 @@ package haibison.android.lockpattern.utils;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -54,7 +57,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
      * @param context the context.
      * @param view    the view to be controlled by this async task.
      */
-    public LoadingView(Context context, View view) {
+    public LoadingView(@NonNull Context context, @NonNull View view) {
         mView = view;
     }// LoadingView()
 
@@ -62,6 +65,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
      * If you override this method, you must call {@code super.onPreExecute()} at beginning of the method.
      */
     @Override
+    @CallSuper
     protected void onPreExecute() {
         new Handler().postDelayed(new Runnable() {
 
@@ -77,6 +81,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
      * If you override this method, you must call {@code super.onPostExecute(result)} at beginning of the method.
      */
     @Override
+    @CallSuper
     protected void onPostExecute(Result result) {
         doFinish();
     }// onPostExecute()
@@ -85,6 +90,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
      * If you override this method, you must call {@code super.onCancelled()} at beginning of the method.
      */
     @Override
+    @CallSuper
     protected void onCancelled() {
         doFinish();
         super.onCancelled();
@@ -110,6 +116,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
      * @param delayTime the delay time to set, in milliseconds.
      * @return the instance of this object, for chaining multiple calls into a single statement.
      */
+    @NonNull
     public LoadingView<Params, Progress, Result> setDelayTime(int delayTime) {
         mDelayTime = delayTime >= 0 ? delayTime : 0;
         return this;
@@ -120,7 +127,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
      *
      * @param t {@link Throwable}
      */
-    protected void setLastException(Throwable t) {
+    protected void setLastException(@Nullable Throwable t) {
         mLastException = t;
     }// setLastException()
 
@@ -129,6 +136,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
      *
      * @return {@link Throwable}
      */
+    @Nullable
     public Throwable getLastException() {
         return mLastException;
     }// getLastException()

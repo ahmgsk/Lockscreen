@@ -17,6 +17,8 @@
 package haibison.android.lockpattern.utils;
 
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -34,35 +36,35 @@ public class FloatAnimator {
      *
      * @author Hai Bison
      */
-    public static interface EventListener {
+    public interface EventListener {
 
         /**
          * Will be called when animation starts.
          *
          * @param animator the animator.
          */
-        void onAnimationStart(FloatAnimator animator);
+        void onAnimationStart(@NonNull FloatAnimator animator);
 
         /**
          * Will be called when new animated value is calculated.
          *
          * @param animator the animator.
          */
-        void onAnimationUpdate(FloatAnimator animator);
+        void onAnimationUpdate(@NonNull FloatAnimator animator);
 
         /**
          * Will be called when animation cancels.
          *
          * @param animator the animator.
          */
-        void onAnimationCancel(FloatAnimator animator);
+        void onAnimationCancel(@NonNull FloatAnimator animator);
 
         /**
          * Will be called when animation ends.
          *
          * @param animator the animator.
          */
-        void onAnimationEnd(FloatAnimator animator);
+        void onAnimationEnd(@NonNull FloatAnimator animator);
 
     }// EventListener
 
@@ -74,20 +76,20 @@ public class FloatAnimator {
     public static class SimpleEventListener implements EventListener {
 
         @Override
-        public void onAnimationStart(FloatAnimator animator) {
-        }
+        public void onAnimationStart(@NonNull FloatAnimator animator) {
+        }//onAnimationStart()
 
         @Override
-        public void onAnimationUpdate(FloatAnimator animator) {
-        }
+        public void onAnimationUpdate(@NonNull FloatAnimator animator) {
+        }//onAnimationUpdate()
 
         @Override
-        public void onAnimationCancel(FloatAnimator animator) {
-        }
+        public void onAnimationCancel(@NonNull FloatAnimator animator) {
+        }//onAnimationCancel()
 
         @Override
-        public void onAnimationEnd(FloatAnimator animator) {
-        }
+        public void onAnimationEnd(@NonNull FloatAnimator animator) {
+        }//onAnimationEnd()
 
     }// SimpleEventListener
 
@@ -125,7 +127,9 @@ public class FloatAnimator {
      *
      * @param listener the listener.
      */
-    public void addEventListener(EventListener listener) {
+    public void addEventListener(@Nullable EventListener listener) {
+        if (listener == null) return;
+
         if (mEventListeners == null) mEventListeners = Lists.newArrayList();
         mEventListeners.add(listener);
     }// addEventListener()

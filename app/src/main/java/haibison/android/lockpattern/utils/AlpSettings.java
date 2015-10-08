@@ -23,6 +23,8 @@ import android.os.Build;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import haibison.android.lockpattern.R;
 
@@ -48,6 +50,7 @@ public class AlpSettings {
      *
      * @return the global preference filename.
      */
+    @NonNull
     public static final String genPreferenceFilename() {
         return String.format("%s_%s", Alp.LIB_NAME, Alp.UID);
     }// genPreferenceFilename()
@@ -57,7 +60,8 @@ public class AlpSettings {
      *
      * @return the global database filename.
      */
-    public static final String genDatabaseFilename(String name) {
+    @NonNull
+    public static final String genDatabaseFilename(@NonNull String name) {
         return String.format("%s_%s_%s", Alp.LIB_NAME, Alp.UID, name);
     }// genDatabaseFilename()
 
@@ -68,7 +72,8 @@ public class AlpSettings {
      * @return {@link SharedPreferences}
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static SharedPreferences p(Context context) {
+    @NonNull
+    public static SharedPreferences p(@NonNull Context context) {
         /*
          * Always use application context.
          */
@@ -84,7 +89,8 @@ public class AlpSettings {
      * @since v2.6 beta
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static void setupPreferenceManager(Context context, PreferenceManager pm) {
+    @NonNull
+    public static void setupPreferenceManager(@NonNull Context context, @NonNull PreferenceManager pm) {
         pm.setSharedPreferencesMode(Context.MODE_PRIVATE);
         pm.setSharedPreferencesName(genPreferenceFilename());
     }// setupPreferenceManager()
@@ -136,7 +142,7 @@ public class AlpSettings {
          * @param context the context.
          * @return {@code true} or {@code false}. Default is {@code false}.
          */
-        public static boolean isStealthMode(Context context) {
+        public static boolean isStealthMode(@NonNull Context context) {
             return p(context).getBoolean(context.getString(R.string.alp_42447968_pkey_display_stealth_mode),
                     context.getResources().getBoolean(R.bool.alp_42447968_pkey_display_stealth_mode_default));
         }// isStealthMode()
@@ -149,7 +155,7 @@ public class AlpSettings {
          * @param context the context.
          * @param v       the value.
          */
-        public static void setStealthMode(Context context, boolean v) {
+        public static void setStealthMode(@NonNull Context context, boolean v) {
             p(context).edit().putBoolean(context.getString(R.string.alp_42447968_pkey_display_stealth_mode), v)
                     .commit();
         }// setStealthMode()
@@ -160,7 +166,7 @@ public class AlpSettings {
          * @param context the context.
          * @return the minimum wired dots allowed for a pattern. Default is {@code 4}.
          */
-        public static int getMinWiredDots(Context context) {
+        public static int getMinWiredDots(@NonNull Context context) {
             return p(context).getInt(context
                     .getString(R.string.alp_42447968_pkey_display_min_wired_dots), context.getResources()
                     .getInteger(
@@ -174,7 +180,7 @@ public class AlpSettings {
          * @param v       the input value.
          * @return the correct value.
          */
-        public static int validateMinWiredDots(Context context, int v) {
+        public static int validateMinWiredDots(@NonNull Context context, int v) {
             if (v <= 0 || v > 9) v = context
                     .getResources()
                     .getInteger(
@@ -190,7 +196,7 @@ public class AlpSettings {
          * @param context the context.
          * @param v       the minimum wired dots allowed for a pattern.
          */
-        public static void setMinWiredDots(Context context, int v) {
+        public static void setMinWiredDots(@NonNull Context context, int v) {
             v = validateMinWiredDots(context, v);
             p(context).edit().putInt(context
                     .getString(R.string.alp_42447968_pkey_display_min_wired_dots), v).commit();
@@ -202,7 +208,7 @@ public class AlpSettings {
          * @param context the context.
          * @return the max retries allowed in mode comparing pattern. Default is {@code 5}.
          */
-        public static int getMaxRetries(Context context) {
+        public static int getMaxRetries(@NonNull Context context) {
             return p(context).getInt(context
                     .getString(R.string.alp_42447968_pkey_display_max_retries), context.getResources()
                     .getInteger(
@@ -216,7 +222,7 @@ public class AlpSettings {
          * @param v       the input value.
          * @return the correct value.
          */
-        public static int validateMaxRetries(Context context, int v) {
+        public static int validateMaxRetries(@NonNull Context context, int v) {
             if (v <= 0) v = context
                     .getResources()
                     .getInteger(
@@ -232,7 +238,7 @@ public class AlpSettings {
          * @param context the context.
          * @param v       the max retries allowed in mode comparing pattern.
          */
-        public static void setMaxRetries(Context context, int v) {
+        public static void setMaxRetries(@NonNull Context context, int v) {
             v = validateMaxRetries(context, v);
             p(context).edit().putInt(context
                     .getString(R.string.alp_42447968_pkey_display_max_retries), v).commit();
@@ -244,7 +250,7 @@ public class AlpSettings {
          * @param context the context.
          * @return the wired dots for a "CAPTCHA" pattern. Default is {@code 4}.
          */
-        public static int getCaptchaWiredDots(Context context) {
+        public static int getCaptchaWiredDots(@NonNull Context context) {
             return p(context).getInt(context
                     .getString(R.string.alp_42447968_pkey_display_captcha_wired_dots), context.getResources()
                     .getInteger(
@@ -258,7 +264,7 @@ public class AlpSettings {
          * @param v       the input value.
          * @return the correct value.
          */
-        public static int validateCaptchaWiredDots(Context context, int v) {
+        public static int validateCaptchaWiredDots(@NonNull Context context, int v) {
             if (v <= 0 || v > 9) v = context
                     .getResources()
                     .getInteger(
@@ -274,7 +280,7 @@ public class AlpSettings {
          * @param context the context.
          * @param v       the wired dots for a "CAPTCHA" pattern.
          */
-        public static void setCaptchaWiredDots(Context context, int v) {
+        public static void setCaptchaWiredDots(@NonNull Context context, int v) {
             v = validateCaptchaWiredDots(context, v);
             p(context).edit().putInt(context
                     .getString(R.string.alp_42447968_pkey_display_captcha_wired_dots), v).commit();
@@ -316,7 +322,7 @@ public class AlpSettings {
          * @param context the context.
          * @return {@code true} or {@code false}. Default is {@code false}.
          */
-        public static boolean isAutoSavePattern(Context context) {
+        public static boolean isAutoSavePattern(@NonNull Context context) {
             return p(context).getBoolean(context.getString(R.string.alp_42447968_pkey_sys_auto_save_pattern),
                     context.getResources().getBoolean(R.bool.alp_42447968_pkey_sys_auto_save_pattern_default));
         }// isAutoSavePattern()
@@ -329,7 +335,7 @@ public class AlpSettings {
          * @param context the context.
          * @param v       the auto-save mode.
          */
-        public static void setAutoSavePattern(Context context, boolean v) {
+        public static void setAutoSavePattern(@NonNull Context context, boolean v) {
             p(context).edit().putBoolean(context.getString(R.string.alp_42447968_pkey_sys_auto_save_pattern), v)
                     .commit();
             if (!v) setPattern(context, null);
@@ -341,7 +347,7 @@ public class AlpSettings {
          * @param context the context.
          * @return the pattern. Default is {@code null}.
          */
-        public static char[] getPattern(Context context) {
+        public static char[] getPattern(@NonNull Context context) {
             String pattern = p(context).getString(context.getString(R.string.alp_42447968_pkey_sys_pattern), null);
             return pattern == null ? null : pattern.toCharArray();
         }// getPattern()
@@ -352,7 +358,7 @@ public class AlpSettings {
          * @param context the context.
          * @param pattern the pattern, can be {@code null} to reset it.
          */
-        public static void setPattern(Context context, char[] pattern) {
+        public static void setPattern(@NonNull Context context, @Nullable char[] pattern) {
             p(context).edit().putString(context.getString(R.string.alp_42447968_pkey_sys_pattern), pattern != null ?
                     new String(pattern) : null).commit();
         }// setPattern()
@@ -363,7 +369,7 @@ public class AlpSettings {
          * @param context the context.
          * @return the full name of encrypter class. Default is {@code null}.
          */
-        public static char[] getEncrypterClass(Context context) {
+        public static char[] getEncrypterClass(@NonNull Context context) {
             String clazz = p(context).getString(context.getString(R.string.alp_42447968_pkey_sys_encrypter_class),
                     null);
             return clazz == null ? null : clazz.toCharArray();
@@ -377,7 +383,7 @@ public class AlpSettings {
          * @param context the context.
          * @param clazz   the encrypter class, can be {@code null} if you don't want to use it.
          */
-        public static void setEncrypterClass(Context context, Class<?> clazz) {
+        public static void setEncrypterClass(@NonNull Context context, @Nullable Class<?> clazz) {
             setEncrypterClass(context, clazz != null ? clazz.getName().toCharArray() : null);
         }// setEncrypterClass()
 
@@ -389,7 +395,7 @@ public class AlpSettings {
          * @param context the context.
          * @param clazz   the full name of encrypter class, can be {@code null} if you don't want to use it.
          */
-        public static void setEncrypterClass(Context context, char[] clazz) {
+        public static void setEncrypterClass(@NonNull Context context, @Nullable char[] clazz) {
             p(context).edit().putString(context.getString(R.string.alp_42447968_pkey_sys_encrypter_class),
                     clazz != null ? new String(clazz) : null).commit();
         }// setEncrypterClass()

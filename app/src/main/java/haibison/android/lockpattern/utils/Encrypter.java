@@ -17,6 +17,7 @@
 package haibison.android.lockpattern.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -38,7 +39,8 @@ public interface Encrypter {
      * @return the encrypted char array of the pattern.
      * @since v2.1 beta
      */
-    char[] encrypt(Context context, List<Cell> pattern);
+    @NonNull
+    char[] encrypt(@NonNull Context context, @NonNull List<Cell> pattern);
 
     /**
      * Decrypts an encrypted pattern.
@@ -47,6 +49,7 @@ public interface Encrypter {
      * @param encryptedPattern the encrypted pattern.
      * @return the original pattern.
      */
-    List<Cell> decrypt(Context context, char[] encryptedPattern);
+    @NonNull
+    List<Cell> decrypt(@NonNull Context context, @NonNull char[] encryptedPattern);
 
 }

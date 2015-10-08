@@ -16,6 +16,7 @@
 
 package haibison.android.lockpattern.widget;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
@@ -63,7 +64,8 @@ public class LockPatternUtils {
      * @param string The pattern serialized with {@link #patternToString}
      * @return The pattern.
      */
-    public static List<LockPatternView.Cell> stringToPattern(String string) {
+    @NonNull
+    public static List<LockPatternView.Cell> stringToPattern(@NonNull String string) {
         List<LockPatternView.Cell> result = Lists.newArrayList();
 
         try {
@@ -85,7 +87,8 @@ public class LockPatternUtils {
      * @param pattern The pattern.
      * @return The pattern in string form.
      */
-    public static String patternToString(List<LockPatternView.Cell> pattern) {
+    @NonNull
+    public static String patternToString(@NonNull List<LockPatternView.Cell> pattern) {
         if (pattern == null) {
             return "";
         }
@@ -109,7 +112,8 @@ public class LockPatternUtils {
      * @param pattern The pattern
      * @return The SHA-1 string of the pattern got from {@link #patternToString(List)}
      */
-    public static String patternToSha1(List<LockPatternView.Cell> pattern) {
+    @NonNull
+    public static String patternToSha1(@NonNull List<LockPatternView.Cell> pattern) {
         try {
             MessageDigest md = MessageDigest.getInstance(SHA1);
             md.update(patternToString(pattern).getBytes(UTF8));
@@ -136,6 +140,7 @@ public class LockPatternUtils {
      * @author Hai Bison
      * @since v2.7 beta
      */
+    @NonNull
     public static ArrayList<LockPatternView.Cell> genCaptchaPattern(int size) throws IndexOutOfBoundsException {
         if (size <= 0 || size > LockPatternView.MATRIX_SIZE)
             throw new IndexOutOfBoundsException("`size` must be in range [1, `LockPatternView.MATRIX_SIZE`]");

@@ -19,6 +19,7 @@ package haibison.android.lockpattern.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
@@ -45,7 +46,7 @@ public class UI {
      *
      * @author Hai Bison
      */
-    public static enum ScreenSize {
+    public enum ScreenSize {
         /**
          * Small.
          */
@@ -92,8 +93,7 @@ public class UI {
          * @param fixedWidthMajor  the fixed width major.
          * @param fixedWidthMinor  the fixed width minor.
          */
-        private ScreenSize(float fixedHeightMajor, float fixedHeightMinor,
-                           float fixedWidthMajor, float fixedWidthMinor) {
+        ScreenSize(float fixedHeightMajor, float fixedHeightMinor, float fixedWidthMajor, float fixedWidthMinor) {
             this.fixedHeightMajor = fixedHeightMajor;
             this.fixedHeightMinor = fixedHeightMinor;
             this.fixedWidthMajor = fixedWidthMajor;
@@ -106,9 +106,9 @@ public class UI {
          * @param context the context.
          * @return current screen size.
          */
-        public static ScreenSize getCurrent(Context context) {
-            switch (context.getResources().getConfiguration().screenLayout
-                    & Configuration.SCREENLAYOUT_SIZE_MASK) {
+        @NonNull
+        public static ScreenSize getCurrent(@NonNull Context context) {
+            switch (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) {
                 case Configuration.SCREENLAYOUT_SIZE_SMALL:
                     return SMALL;
                 case Configuration.SCREENLAYOUT_SIZE_NORMAL:
@@ -129,7 +129,7 @@ public class UI {
      *
      * @param dialog the dialog.
      */
-    public static void adjustDialogSizeForLargeScreens(Dialog dialog) {
+    public static void adjustDialogSizeForLargeScreens(@NonNull Dialog dialog) {
         adjustDialogSizeForLargeScreens(dialog.getWindow());
     }// adjustDialogSizeForLargeScreens()
 
@@ -138,7 +138,7 @@ public class UI {
      *
      * @param dialogWindow the window <i>of the dialog</i>.
      */
-    public static void adjustDialogSizeForLargeScreens(Window dialogWindow) {
+    public static void adjustDialogSizeForLargeScreens(@NonNull Window dialogWindow) {
         if (DEBUG) Log.d(CLASSNAME, "adjustDialogSizeForLargeScreens()");
 
         if (!dialogWindow.isFloating()) return;

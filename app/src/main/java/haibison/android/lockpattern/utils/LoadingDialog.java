@@ -21,6 +21,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Log;
 
 import haibison.android.lockpattern.R;
@@ -56,7 +60,7 @@ public abstract class LoadingDialog<Params, Progress, Result> extends AsyncTask<
      * @param context    the context.
      * @param cancelable whether the user can cancel the dialog by tapping outside of it, or by pressing Back button.
      */
-    public LoadingDialog(Context context, boolean cancelable) {
+    public LoadingDialog(@NonNull Context context, boolean cancelable) {
         this(context, cancelable, R.string.alp_42447968_loading);
     }// LoadingDialog()
 
@@ -67,7 +71,7 @@ public abstract class LoadingDialog<Params, Progress, Result> extends AsyncTask<
      * @param cancelable whether the user can cancel the dialog by tapping outside of it, or by pressing Back button.
      * @param msgId      the resource ID of the message to be displayed.
      */
-    public LoadingDialog(Context context, boolean cancelable, int msgId) {
+    public LoadingDialog(@NonNull Context context, boolean cancelable, @StringRes int msgId) {
         this(context, cancelable, context.getString(msgId));
     }// LoadingDialog()
 
@@ -78,7 +82,7 @@ public abstract class LoadingDialog<Params, Progress, Result> extends AsyncTask<
      * @param cancelable whether the user can cancel the dialog by tapping outside of it, or by pressing Back button.
      * @param msg        the message to display.
      */
-    public LoadingDialog(Context context, boolean cancelable, CharSequence msg) {
+    public LoadingDialog(@NonNull Context context, boolean cancelable, @Nullable CharSequence msg) {
         mDialog = new ProgressDialog(context);
         mDialog.setCancelable(cancelable);
         mDialog.setMessage(msg);
@@ -101,6 +105,7 @@ public abstract class LoadingDialog<Params, Progress, Result> extends AsyncTask<
      * If you override this method, you must call {@code super.onPreExecute()} at beginning of the method.
      */
     @Override
+    @CallSuper
     protected void onPreExecute() {
         new Handler().postDelayed(new Runnable() {
 
@@ -125,6 +130,7 @@ public abstract class LoadingDialog<Params, Progress, Result> extends AsyncTask<
      * If you override this method, you must call {@code super.onPostExecute(result)} at beginning of the method.
      */
     @Override
+    @CallSuper
     protected void onPostExecute(Result result) {
         doFinish();
     }// onPostExecute()
@@ -133,6 +139,7 @@ public abstract class LoadingDialog<Params, Progress, Result> extends AsyncTask<
      * If you override this method, you must call {@code super.onCancelled()} at beginning of the method.
      */
     @Override
+    @CallSuper
     protected void onCancelled() {
         doFinish();
         super.onCancelled();
@@ -176,7 +183,7 @@ public abstract class LoadingDialog<Params, Progress, Result> extends AsyncTask<
      *
      * @param t {@link Throwable}
      */
-    protected void setLastException(Throwable t) {
+    protected void setLastException(@Nullable Throwable t) {
         mLastException = t;
     }// setLastException()
 
@@ -185,6 +192,7 @@ public abstract class LoadingDialog<Params, Progress, Result> extends AsyncTask<
      *
      * @return {@link Throwable}
      */
+    @Nullable
     protected Throwable getLastException() {
         return mLastException;
     }// getLastException()
