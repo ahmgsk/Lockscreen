@@ -16,6 +16,7 @@
 
 package haibison.android.lockpattern;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.PendingIntent;
@@ -30,6 +31,7 @@ import android.os.ResultReceiver;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -40,7 +42,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,7 +72,7 @@ import static haibison.android.lockpattern.utils.AlpSettings.Security.METADATA_E
  * Main activity for this library. <p> You can deliver result to {@link PendingIntent}'s and/ or {@link ResultReceiver}
  * too. See {@link #EXTRA_PENDING_INTENT_OK}, {@link #EXTRA_PENDING_INTENT_CANCELLED} and {@link #EXTRA_RESULT_RECEIVER}
  * for more details. </p>
- * <p/>
+ * <p>
  * <h1>NOTES</h1> <ul> <li> You must use one of built-in actions when calling this activity. They start with {@code
  * ACTION_*}. Otherwise the library might behave strangely (we don't cover those cases).</li> <li>You must use one of
  * the themes that this library supports. They start with {@code R.style.Alp_42447968_Theme_*}. The reason is the themes
@@ -90,7 +91,7 @@ public class LockPatternActivity extends Activity {
     /**
      * Use this action to create new pattern. You can provide an {@link Encrypter} with {@link
      * Security#setEncrypterClass(android.content.Context, Class)} to improve security.
-     * <p/>
+     * <p>
      * If the user created a pattern, {@link Activity#RESULT_OK} returns with the pattern ({@link #EXTRA_PATTERN}).
      * Otherwise {@link Activity#RESULT_CANCELED} returns.
      *
@@ -101,68 +102,18 @@ public class LockPatternActivity extends Activity {
     public static final String ACTION_CREATE_PATTERN = CLASSNAME + ".CREATE_PATTERN";
 
     /**
-     * Creates new intent with {@link #ACTION_CREATE_PATTERN}. You must call this intent from a UI thread.
-     *
-     * @param context the context.
-     * @return new intent.
-     */
-    public static Intent newIntentToCreatePattern(@NonNull Context context) {
-        Intent result = new Intent(ACTION_CREATE_PATTERN, null, context, LockPatternActivity.class);
-        return result;
-    }// newIntentToCreatePattern()
-
-    /**
-     * This method is a shortcut to call {@link #newIntentToCreatePattern(Context)} from a UI thread.
-     *
-     * @param caller      must be an instance of {@link Activity}, or {@link Fragment} or support library's {@code
-     *                    Fragment}. <b>Warning:</b> Have a look at description of {@link
-     *                    #call_startActivityForResult(Object, Intent, int)}.
-     * @param context     the context.
-     * @param requestCode request code for {@link Activity#startActivityForResult(Intent, int)} or counterpart methods
-     *                    of fragments.
-     * @throws NullPointerException if caller or context is {@code null}.
-     * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
-     */
-    public static void startToCreatePattern(@NonNull Object caller, @NonNull Context context, int requestCode) {
-        call_startActivityForResult(caller, newIntentToCreatePattern(context), requestCode);
-    }// startToCreatePattern()
-
-    /**
-     * This methods tries to find and call {@code startActivityForResult(Intent, int)} from given caller. Note that if
-     * you use ProGuard, it will work fine with {@link Activity} (or its descendants), framework {@link Fragment}. But
-     * it won't work with support library {@code Fragment} (or its descendants), unless you tell ProGuard to ignore it.
-     *
-     * @param caller      the caller.
-     * @param intent      the intent.
-     * @param requestCode request code.
-     * @throws NullPointerException if caller or intent is {@code null}.
-     * @throws RuntimeException     which wraps any exception while invoking original method from the caller.
-     */
-    public static void call_startActivityForResult(@NonNull Object caller, @NonNull Intent intent, int requestCode) {
-        try {
-            Method method = caller.getClass().getMethod("startActivityForResult", Intent.class, int.class);
-            method.setAccessible(true);
-            method.invoke(caller, intent, requestCode);
-        } catch (Throwable t) {
-            Log.e(CLASSNAME, t.getMessage(), t);
-            // Re-throw it
-            throw new RuntimeException(t);
-        }
-    }// call_startActivityForResult()
-
-    /**
      * Use this action to compare pattern. You provide the pattern to be compared with {@link #EXTRA_PATTERN}.
-     * <p/>
+     * <p>
      * If you enabled feature auto-save pattern before (with {@link Security#setAutoSavePattern(android.content.Context,
      * boolean)} ), then you don't need {@link #EXTRA_PATTERN} at this time. But if you use this extra, its priority is
      * higher than the one stored in shared preferences.
-     * <p/>
+     * <p>
      * You can use {@link #EXTRA_PENDING_INTENT_FORGOT_PATTERN} to help your users in case they forgot the patterns.
-     * <p/>
+     * <p>
      * If the user passes, {@link Activity#RESULT_OK} returns. If not, {@link #RESULT_FAILED} returns.
-     * <p/>
+     * <p>
      * If the user cancels the task, {@link Activity#RESULT_CANCELED} returns.
-     * <p/>
+     * <p>
      * In any case, there will have extra {@link #EXTRA_RETRY_COUNT} available in the intent result.
      *
      * @see #EXTRA_PATTERN
@@ -175,73 +126,14 @@ public class LockPatternActivity extends Activity {
     public static final String ACTION_COMPARE_PATTERN = CLASSNAME + ".COMPARE_PATTERN";
 
     /**
-     * Creates new intent with {@link #ACTION_COMPARE_PATTERN}. You must call this intent from a UI thread.
-     *
-     * @param context the context.
-     * @param pattern optional, see {@link #EXTRA_PATTERN}.
-     * @return new intent.
-     */
-    public static Intent newIntentToComparePattern(@NonNull Context context, @Nullable char[] pattern) {
-        Intent result = new Intent(ACTION_COMPARE_PATTERN, null, context, LockPatternActivity.class);
-        if (pattern != null) result.putExtra(EXTRA_PATTERN, pattern);
-
-        return result;
-    }// newIntentToComparePattern()
-
-    /**
-     * This method is a shortcut to call {@link #newIntentToComparePattern(Context, char[])} from a UI thread.
-     *
-     * @param caller      must be an instance of {@link Activity}, or {@link Fragment} or support library's {@code
-     *                    Fragment}. <b>Warning:</b> Have a look at description of {@link
-     *                    #call_startActivityForResult(Object, Intent, int)}.
-     * @param context     the context.
-     * @param requestCode request code for {@link Activity#startActivityForResult(Intent, int)} or counterpart methods
-     *                    of fragments.
-     * @param pattern     optional, see {@link #EXTRA_PATTERN}.
-     * @throws NullPointerException if caller or context is {@code null}.
-     * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
-     */
-    public static void startToComparePattern(@NonNull Object caller, @NonNull Context context, int requestCode,
-                                             @Nullable char[] pattern) {
-        call_startActivityForResult(caller, newIntentToComparePattern(context, pattern), requestCode);
-    }// startToComparePattern()
-
-    /**
      * Use this action to let the activity generate a random pattern and ask the user to re-draw it to verify.
-     * <p/>
+     * <p>
      * The default length of the auto-generated pattern is {@code 4}. You can change it with {@link
      * Display#setCaptchaWiredDots(android.content.Context, int)}.
      *
      * @since v2.7 beta
      */
     public static final String ACTION_VERIFY_CAPTCHA = CLASSNAME + ".VERIFY_CAPTCHA";
-
-    /**
-     * Creates new intent with {@link #ACTION_VERIFY_CAPTCHA}. You must call this intent from a UI thread.
-     *
-     * @param context the context.
-     * @return new intent.
-     */
-    public static Intent newIntentToVerifyCaptcha(@NonNull Context context) {
-        Intent result = new Intent(ACTION_VERIFY_CAPTCHA, null, context, LockPatternActivity.class);
-        return result;
-    }// newIntentToVerifyCaptcha()
-
-    /**
-     * This method is a shortcut to call {@link #newIntentToVerifyCaptcha(Context)} from a UI thread.
-     *
-     * @param caller      must be an instance of {@link Activity}, or {@link Fragment} or support library's {@code
-     *                    Fragment}. <b>Warning:</b> Have a look at description of {@link
-     *                    #call_startActivityForResult(Object, Intent, int)}.
-     * @param context     the context.
-     * @param requestCode request code for {@link Activity#startActivityForResult(Intent, int)} or counterpart methods
-     *                    of fragments.
-     * @throws NullPointerException if caller or context is {@code null}.
-     * @throws RuntimeException     if any, while calling {@link #call_startActivityForResult(Object, Intent, int)}.
-     */
-    public static void startToVerifyCaptcha(@NonNull Object caller, @NonNull Context context, int requestCode) {
-        call_startActivityForResult(caller, newIntentToVerifyCaptcha(context), requestCode);
-    }// startToVerifyCaptcha()
 
     /**
      * If you use {@link #ACTION_COMPARE_PATTERN} and the user fails to "login" after a number of tries, this activity
@@ -281,7 +173,7 @@ public class LockPatternActivity extends Activity {
 
     /**
      * Key to hold the pattern. It must be a {@code char[]} array.
-     * <p/>
+     * <p>
      * <ul> <li>If you use encrypter, it should be an encrypted array.</li> <li>If you don't use encrypter, it should be
      * the SHA-1 value of the actual pattern. You can generate the value by {@link LockPatternUtils#patternToSha1
      * (List)}.</li> </ul>
@@ -302,7 +194,7 @@ public class LockPatternActivity extends Activity {
      * Put a {@link PendingIntent} into this key. It will be sent before {@link Activity#RESULT_OK} will be returning.
      * If you were calling this activity with {@link #ACTION_CREATE_PATTERN}, key {@link #EXTRA_PATTERN} will be
      * attached to the original intent which the pending intent holds.
-     * <p/>
+     * <p>
      * <h1>Notes</h1> <ul> <li>If you're going to use an activity, you don't need {@link Intent#FLAG_ACTIVITY_NEW_TASK}
      * for the intent, since the library will call it inside {@link LockPatternActivity} .</li> </ul>
      */
@@ -311,7 +203,7 @@ public class LockPatternActivity extends Activity {
     /**
      * Put a {@link PendingIntent} into this key. It will be sent before {@link Activity#RESULT_CANCELED} will be
      * returning.
-     * <p/>
+     * <p>
      * <h1>Notes</h1> <ul> <li>If you're going to use an activity, you don't need {@link Intent#FLAG_ACTIVITY_NEW_TASK}
      * for the intent, since the library will call it inside {@link LockPatternActivity} .</li> </ul>
      */
@@ -320,7 +212,7 @@ public class LockPatternActivity extends Activity {
     /**
      * You put a {@link PendingIntent} into this extra. The library will show a button <i>"Forgot pattern?"</i> and call
      * your intent later when the user taps it.
-     * <p/>
+     * <p>
      * <h1>Notes</h1> <ul> <li>If you use an activity, you don't need {@link Intent#FLAG_ACTIVITY_NEW_TASK} for the
      * intent, since the library will call it inside {@link LockPatternActivity} .</li> <li>{@link LockPatternActivity}
      * will finish with {@link #RESULT_FORGOT_PATTERN} <i><b>after</b> making a call</i> to start your pending
@@ -332,6 +224,238 @@ public class LockPatternActivity extends Activity {
      * @since v2.8 beta
      */
     public static final String EXTRA_PENDING_INTENT_FORGOT_PATTERN = CLASSNAME + ".PENDING_INTENT_FORGOT_PATTERN";
+
+    /**
+     * Intent builder.
+     */
+    public static class IntentBuilder {
+
+        /**
+         * Makes new builder with {@link #ACTION_CREATE_PATTERN}.
+         *
+         * @param context the context.
+         * @return new builder.
+         */
+        @NonNull
+        public static IntentBuilder newPatternCreator(@NonNull Context context) {
+            return new IntentBuilder(context, LockPatternActivity.class, ACTION_CREATE_PATTERN);
+        }//newPatternCreator()
+
+        /**
+         * Makes new builder with {@link #ACTION_COMPARE_PATTERN}.
+         *
+         * @param context the context.
+         * @param pattern the pattern.
+         * @return new builder.
+         */
+        @NonNull
+        public static IntentBuilder newPatternComparator(@NonNull Context context, @Nullable char[] pattern) {
+            return new IntentBuilder(context, LockPatternActivity.class, ACTION_COMPARE_PATTERN)
+                    .setPattern(pattern);
+        }//newPatternComparator()
+
+        /**
+         * Makes new builder with {@link #ACTION_COMPARE_PATTERN}.
+         *
+         * @param context the context.
+         * @return new builder.
+         */
+        @NonNull
+        public static IntentBuilder newPatternComparator(@NonNull Context context) {
+            return newPatternComparator(context, null);
+        }//newPatternComparator()
+
+        /**
+         * Makes new builder with {@link #ACTION_VERIFY_CAPTCHA}.
+         *
+         * @param context the context.
+         * @return new builder.
+         */
+        @NonNull
+        public static IntentBuilder newCaptchaVerifier(@NonNull Context context) {
+            return new IntentBuilder(context, LockPatternActivity.class, ACTION_VERIFY_CAPTCHA);
+        }//newCaptchaVerifier()
+
+        private final Context mContext;
+        private final Intent mIntent;
+
+        /**
+         * Makes new instance.
+         *
+         * @param context the context.
+         * @param clazz   activity class.
+         * @param action  action.
+         */
+        public IntentBuilder(@NonNull Context context, @NonNull Class<? extends Activity> clazz,
+                             @NonNull String action) {
+            mContext = context;
+            mIntent = new Intent(action, null, context, clazz);
+        }//IntentBuilder()
+
+        /**
+         * Gets the intent being built.
+         *
+         * @return the intent.
+         */
+        @NonNull
+        public Intent getIntent() {
+            return mIntent;
+        }//getIntent()
+
+        /**
+         * Builds the final intent.
+         *
+         * @return the final intent.
+         */
+        @NonNull
+        public Intent build() {
+            return mIntent;
+        }//build()
+
+        /**
+         * Builds the intent via {@link #build()} and calls {@link Activity#startActivityForResult(Intent, int)}.
+         *
+         * @param activity    your activity.
+         * @param requestCode request code.
+         */
+        public void startForResult(@NonNull Activity activity, int requestCode) {
+            activity.startActivityForResult(build(), requestCode);
+        }//startForResult()
+
+        /**
+         * Builds the intent via {@link #build()} and calls {@link Activity#startActivityForResult(Intent, int,
+         * Bundle)}.
+         *
+         * @param activity    your activity.
+         * @param requestCode request code.
+         * @param options     options.
+         */
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        public void startForResult(@NonNull Activity activity, int requestCode, @Nullable Bundle options) {
+            activity.startActivityForResult(build(), requestCode, options);
+        }//startForResult()
+
+        /**
+         * Builds the intent via {@link #build()} and calls {@link Fragment#startActivityForResult(Intent, int)}.
+         *
+         * @param fragment    your fragment.
+         * @param requestCode request code.
+         */
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+        public void startForResult(@NonNull Fragment fragment, int requestCode) {
+            fragment.startActivityForResult(build(), requestCode);
+        }//startForResult()
+
+        /**
+         * Builds the intent via {@link #build()} and calls {@link Fragment#startActivityForResult(Intent, int,
+         * Bundle)}.
+         *
+         * @param fragment    your fragment.
+         * @param requestCode request code.
+         * @param options     options.
+         */
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        public void startForResult(@NonNull Fragment fragment, int requestCode, @Nullable Bundle options) {
+            fragment.startActivityForResult(build(), requestCode, options);
+        }//startForResult()
+
+        /**
+         * Sets theme.
+         *
+         * @param resTheme see {@link #EXTRA_THEME}.
+         * @return this builder.
+         */
+        @NonNull
+        public <T extends IntentBuilder> T setTheme(@StyleRes int resTheme) {
+            if (resTheme != 0)
+                mIntent.putExtra(EXTRA_THEME, resTheme);
+            else
+                mIntent.removeExtra(EXTRA_THEME);
+
+            return (T) this;
+        }//setTheme()
+
+        /**
+         * Sets pattern.
+         *
+         * @param pattern see {@link #EXTRA_PATTERN}.
+         * @return this builder.
+         */
+        @NonNull
+        public <T extends IntentBuilder> T setPattern(@Nullable char[] pattern) {
+            if (pattern != null)
+                mIntent.putExtra(EXTRA_PATTERN, pattern);
+            else
+                mIntent.removeExtra(EXTRA_PATTERN);
+
+            return (T) this;
+        }//setPattern()
+
+        /**
+         * Sets result receiver.
+         *
+         * @param resultReceiver see {@link #EXTRA_RESULT_RECEIVER}.
+         * @return this builder.
+         */
+        @NonNull
+        public <T extends IntentBuilder> T setResultReceiver(@Nullable ResultReceiver resultReceiver) {
+            if (resultReceiver != null)
+                mIntent.putExtra(EXTRA_RESULT_RECEIVER, resultReceiver);
+            else
+                mIntent.removeExtra(EXTRA_RESULT_RECEIVER);
+
+            return (T) this;
+        }//setResultReceiver()
+
+        /**
+         * Sets pending intent OK.
+         *
+         * @param pendingIntent see {@link #EXTRA_PENDING_INTENT_OK}.
+         * @return this builder.
+         */
+        @NonNull
+        public <T extends IntentBuilder> T setPendingIntentOk(@Nullable PendingIntent pendingIntent) {
+            if (pendingIntent != null)
+                mIntent.putExtra(EXTRA_PENDING_INTENT_OK, pendingIntent);
+            else
+                mIntent.removeExtra(EXTRA_PENDING_INTENT_OK);
+
+            return (T) this;
+        }//setPendingIntentOk()
+
+        /**
+         * Sets pending intent cancelled.
+         *
+         * @param pendingIntent see {@link #EXTRA_PENDING_INTENT_CANCELLED}.
+         * @return this builder.
+         */
+        @NonNull
+        public <T extends IntentBuilder> T setPendingIntentCancelled(@Nullable PendingIntent pendingIntent) {
+            if (pendingIntent != null)
+                mIntent.putExtra(EXTRA_PENDING_INTENT_CANCELLED, pendingIntent);
+            else
+                mIntent.removeExtra(EXTRA_PENDING_INTENT_CANCELLED);
+
+            return (T) this;
+        }//setPendingIntentCancelled()
+
+        /**
+         * Sets pending intent forgot pattern.
+         *
+         * @param pendingIntent see {@link #EXTRA_PENDING_INTENT_FORGOT_PATTERN}.
+         * @return this builder.
+         */
+        @NonNull
+        public <T extends IntentBuilder> T setPendingIntentForgotPattern(@Nullable PendingIntent pendingIntent) {
+            if (pendingIntent != null)
+                mIntent.putExtra(EXTRA_PENDING_INTENT_FORGOT_PATTERN, pendingIntent);
+            else
+                mIntent.removeExtra(EXTRA_PENDING_INTENT_FORGOT_PATTERN);
+
+            return (T) this;
+        }//setPendingIntentForgotPattern()
+
+    }//IntentBuilder
 
     /**
      * Helper enum for button OK commands. (Because we use only one "OK" button for different commands).
@@ -556,17 +680,17 @@ public class LockPatternActivity extends Activity {
          */
 
         switch (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) {
-            case Configuration.SCREENLAYOUT_SIZE_LARGE:
-            case Configuration.SCREENLAYOUT_SIZE_XLARGE: {
-                final int size = getResources().getDimensionPixelSize(
-                        R.dimen.alp_42447968_lockpatternview_size);
-                LayoutParams lp = mLockPatternView.getLayoutParams();
-                lp.width = size;
-                lp.height = size;
-                mLockPatternView.setLayoutParams(lp);
+        case Configuration.SCREENLAYOUT_SIZE_LARGE:
+        case Configuration.SCREENLAYOUT_SIZE_XLARGE: {
+            final int size = getResources().getDimensionPixelSize(
+                    R.dimen.alp_42447968_lockpatternview_size);
+            LayoutParams lp = mLockPatternView.getLayoutParams();
+            lp.width = size;
+            lp.height = size;
+            mLockPatternView.setLayoutParams(lp);
 
-                break;
-            }// LARGE / XLARGE
+            break;
+        }// LARGE / XLARGE
         }
 
         // Haptic feedback
@@ -610,17 +734,17 @@ public class LockPatternActivity extends Activity {
              */
             if (mBtnOkCmd == null) mBtnOkCmd = ButtonOkCommand.CONTINUE;
             switch (mBtnOkCmd) {
-                case CONTINUE:
-                    mBtnConfirm.setText(R.string.alp_42447968_cmd_continue);
-                    break;
-                case DONE:
-                    mBtnConfirm.setText(R.string.alp_42447968_cmd_confirm);
-                    break;
-                default:
-                    /**
-                     * Do nothing.
-                     */
-                    break;
+            case CONTINUE:
+                mBtnConfirm.setText(R.string.alp_42447968_cmd_continue);
+                break;
+            case DONE:
+                mBtnConfirm.setText(R.string.alp_42447968_cmd_confirm);
+                break;
+            default:
+                /**
+                 * Do nothing.
+                 */
+                break;
             }
             if (btnOkEnabled != null) mBtnConfirm.setEnabled(btnOkEnabled);
         }// ACTION_CREATE_PATTERN

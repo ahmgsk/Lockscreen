@@ -18,7 +18,7 @@ package haibison.android.lockpattern.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.IdRes;
+import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 
@@ -40,11 +40,11 @@ public class ResourceUtils {
      * boolean)}.
      *
      * @param context the context.
-     * @param resId   The resource identifier of the desired theme attribute.
+     * @param resAttr The resource identifier of the desired theme attribute.
      * @return the resource ID that {@link TypedValue#resourceId} points to, or {@code 0} if not found.
      */
-    public static int resolveAttribute(@NonNull Context context, @IdRes int resId) {
-        return resolveAttribute(context, resId, 0);
+    public static int resolveAttribute(@NonNull Context context, @AttrRes int resAttr) {
+        return resolveAttribute(context, resAttr, 0);
     }// resolveAttribute()
 
     /**
@@ -52,13 +52,13 @@ public class ResourceUtils {
      * boolean)}.
      *
      * @param context      the context.
-     * @param resId        The resource identifier of the desired theme attribute.
+     * @param resAttr      The resource identifier of the desired theme attribute.
      * @param defaultValue the default value if cannot resolve {@code resId}.
      * @return the resource ID that {@link TypedValue#resourceId} points to, or {@code defaultValue} if not found.
      */
-    public static int resolveAttribute(@NonNull Context context, @IdRes int resId, int defaultValue) {
+    public static int resolveAttribute(@NonNull Context context, @AttrRes int resAttr, int defaultValue) {
         TypedValue typedValue = new TypedValue();
-        if (context.getTheme().resolveAttribute(resId, typedValue, true)) return typedValue.resourceId;
+        if (context.getTheme().resolveAttribute(resAttr, typedValue, true)) return typedValue.resourceId;
         return defaultValue;
     }// resolveAttribute()
 
