@@ -1,7 +1,7 @@
 # android-lockpattern
 
 * License: [Apache License v2.0]
-* Version: `5.0.1` (September 2nd, 2015)
+* Version: `6.0.0` (October 10th, 2015)
 * Project page: <http://haibison.github.io/android-lockpattern/>
 * Demo: <https://play.google.com/store/apps/details?id=group.pals.android.lib.ui.lockpattern.demo>
 * For developers: [Wiki], [API documentation].
@@ -24,11 +24,6 @@
 
 --
 
-Feel free to contact us at:
-
-* E-mails:
-    + haibison.apps[at]gmail.com
-
 In short, you can use this library in your closed source/commercial apps with or without our knowledge. Hope you enjoy
 it  :-)
 
@@ -48,6 +43,13 @@ always useful for everyone.
 
 
 # History
+
+* Version 6.0.0
+    + *Release: October 10th, 2015*
+    + `LockPatternActivity`: added `IntentBuilder`.
+    + Renamed package `haibison.android.lockpattern.util` to `haibison.android.lockpattern.utils`.
+    + Renamed interface `IEncrypter` to `Encrypter`.
+    + Added support library `support-annotations`, to decorate methods, parameters...
 
 * Version 5.0.1
     + *Release: September 2nd, 2015*

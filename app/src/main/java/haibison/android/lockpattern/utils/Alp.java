@@ -37,7 +37,7 @@ public class Alp {
     /**
      * The library version name.
      */
-    public static final String LIB_VERSION_NAME = "5.0.1";
+    public static final String LIB_VERSION_NAME = "6.0.0";
 
     /**
      * This unique ID is used for some stuffs such as preferences' file name.
