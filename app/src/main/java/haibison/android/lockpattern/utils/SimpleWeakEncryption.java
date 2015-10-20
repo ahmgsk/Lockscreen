@@ -197,8 +197,7 @@ public class SimpleWeakEncryption {
      *
      * @param s the string.
      * @return the SHA-256 of given string.
-     * @throws RuntimeException which wraps {@link UnsupportedEncodingException} in case the system does not support
-     *                          {@link #UTF8}.
+     * @throws RuntimeException which wraps {@link UnsupportedEncodingException} in case the system does not support {@link #UTF8}.
      */
     @NonNull
     public static byte[] sha256(@NonNull String s) {
@@ -214,8 +213,8 @@ public class SimpleWeakEncryption {
      *
      * @param bytes the byte array.
      * @return the SHA-256 of given data.
-     * @throws RuntimeException which wraps {@link NoSuchAlgorithmException} in case the system does not support
-     *                          calculating message digest of {@link #SHA256}.
+     * @throws RuntimeException which wraps {@link NoSuchAlgorithmException} in case the system does not support calculating message digest of
+     *                          {@link #SHA256}.
      */
     @NonNull
     public static byte[] sha256(@NonNull byte[] bytes) {

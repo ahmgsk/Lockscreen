@@ -17,7 +17,6 @@
 package haibison.android.lockpattern.utils;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
@@ -36,25 +35,25 @@ public class ResourceUtils {
     }// ResourceUtils()
 
     /**
-     * Convenient method for {@link Context#getTheme()} and {@link Resources.Theme#resolveAttribute(int, TypedValue,
-     * boolean)}.
+     * Convenient method for {@link android.content.Context#getTheme() Context.getTheme()} and
+     * {@link android.content.res.Resources.Theme#resolveAttribute(int, TypedValue, boolean) Resources.Theme.resolveAttribute()}.
      *
      * @param context the context.
      * @param resAttr The resource identifier of the desired theme attribute.
-     * @return the resource ID that {@link TypedValue#resourceId} points to, or {@code 0} if not found.
+     * @return the resource ID that {@link android.util.TypedValue#resourceId TypedValue.resourceId} points to, or {@code 0} if not found.
      */
     public static int resolveAttribute(@NonNull Context context, @AttrRes int resAttr) {
         return resolveAttribute(context, resAttr, 0);
     }// resolveAttribute()
 
     /**
-     * Convenient method for {@link Context#getTheme()} and {@link Resources.Theme#resolveAttribute(int, TypedValue,
-     * boolean)}.
+     * Convenient method for {@link android.content.Context#getTheme() Context.getTheme()} and
+     * {@link android.content.res.Resources.Theme#resolveAttribute(int, TypedValue, boolean) Resources.Theme.resolveAttribute()}.
      *
      * @param context      the context.
      * @param resAttr      The resource identifier of the desired theme attribute.
      * @param defaultValue the default value if cannot resolve {@code resId}.
-     * @return the resource ID that {@link TypedValue#resourceId} points to, or {@code defaultValue} if not found.
+     * @return the resource ID that {@link android.util.TypedValue#resourceId TypedValue.resourceId} points to, or {@code defaultValue} if not found.
      */
     public static int resolveAttribute(@NonNull Context context, @AttrRes int resAttr, int defaultValue) {
         TypedValue typedValue = new TypedValue();

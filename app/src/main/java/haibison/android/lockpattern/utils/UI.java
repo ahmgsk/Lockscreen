@@ -51,18 +51,22 @@ public class UI {
          * Small.
          */
         SMALL(1, 1, 1, 1),
+
         /**
          * Normal.
          */
         NORMAL(1, 1, 1, 1),
+
         /**
          * Large.
          */
         LARGE(.6f, .9f, .6f, .9f),
+
         /**
          * X-Large.
          */
         XLARGE(.6f, .9f, .5f, .7f),
+
         /**
          * Undefined.
          */
@@ -85,14 +89,6 @@ public class UI {
          */
         fixedHeightMajor;
 
-        /**
-         * Creates new instance.
-         *
-         * @param fixedHeightMajor the fixed height major.
-         * @param fixedHeightMinor the fixed height minor.
-         * @param fixedWidthMajor  the fixed width major.
-         * @param fixedWidthMinor  the fixed width minor.
-         */
         ScreenSize(float fixedHeightMajor, float fixedHeightMinor, float fixedWidthMajor, float fixedWidthMinor) {
             this.fixedHeightMajor = fixedHeightMajor;
             this.fixedHeightMinor = fixedHeightMinor;
@@ -109,16 +105,16 @@ public class UI {
         @NonNull
         public static ScreenSize getCurrent(@NonNull Context context) {
             switch (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) {
-                case Configuration.SCREENLAYOUT_SIZE_SMALL:
-                    return SMALL;
-                case Configuration.SCREENLAYOUT_SIZE_NORMAL:
-                    return NORMAL;
-                case Configuration.SCREENLAYOUT_SIZE_LARGE:
-                    return LARGE;
-                case Configuration.SCREENLAYOUT_SIZE_XLARGE:
-                    return XLARGE;
-                default:
-                    return UNDEFINED;
+            case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                return SMALL;
+            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                return NORMAL;
+            case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                return LARGE;
+            case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+                return XLARGE;
+            default:
+                return UNDEFINED;
             }
         }// getCurrent()
 
@@ -145,11 +141,11 @@ public class UI {
 
         final ScreenSize screenSize = ScreenSize.getCurrent(dialogWindow.getContext());
         switch (screenSize) {
-            case LARGE:
-            case XLARGE:
-                break;
-            default:
-                return;
+        case LARGE:
+        case XLARGE:
+            break;
+        default:
+            return;
         }
 
         final DisplayMetrics metrics = dialogWindow.getContext().getResources().getDisplayMetrics();

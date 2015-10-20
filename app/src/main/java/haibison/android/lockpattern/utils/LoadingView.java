@@ -27,8 +27,7 @@ import android.view.View;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 /**
- * An implementation of {@link AsyncTask}, used to show a view while doing some background tasks, then hide it when
- * done.
+ * An implementation of {@link android.os.AsyncTask}, used to show a view while doing some background tasks, then hide it when done.
  *
  * @author Hai Bison
  */

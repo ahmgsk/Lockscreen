@@ -20,8 +20,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,7 +27,7 @@ import android.support.annotation.Nullable;
 import haibison.android.lockpattern.R;
 
 /**
- * All settings for the library. They are stored in {@link SharedPreferences}.
+ * All settings for the library. They are stored in {@link android.content.SharedPreferences SharedPreferences}.
  * <p/>
  * For some options, you can set them directly via tag {@code <meta-data>} inside tag {@code <activity>} in
  * AndroidManifest.xml. Refer to setter methods for details. Note that the values in the manifest have higher priority
@@ -66,10 +64,10 @@ public class AlpSettings {
     }// genDatabaseFilename()
 
     /**
-     * Gets new {@link SharedPreferences}
+     * Gets new {@link android.content.SharedPreferences SharedPreferences}.
      *
      * @param context the context.
-     * @return {@link SharedPreferences}
+     * @return {@link android.content.SharedPreferences SharedPreferences}.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @NonNull
@@ -81,11 +79,12 @@ public class AlpSettings {
     }// p()
 
     /**
-     * Setup {@code pm} to use global unique filename and global access mode. You must use this method if you let the
-     * user change preferences via UI (such as {@link PreferenceActivity}, {@link PreferenceFragment}...).
+     * Setup {@code pm} to use global unique filename and global access mode. You must use this method if you let the user change preferences
+     * via UI (such as {@link android.preference.PreferenceActivity PreferenceActivity},
+     * {@link android.preference.PreferenceFragment PreferenceFragment}...)
      *
      * @param context the context.
-     * @param pm      {@link PreferenceManager}.
+     * @param pm      {@link android.preference.PreferenceManager PreferenceManager}.
      * @since v2.6 beta
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -143,7 +142,8 @@ public class AlpSettings {
          * @return {@code true} or {@code false}. Default is {@code false}.
          */
         public static boolean isStealthMode(@NonNull Context context) {
-            return p(context).getBoolean(context.getString(R.string.alp_42447968_pkey_display_stealth_mode),
+            return p(context).getBoolean(
+                    context.getString(R.string.alp_42447968_pkey_display_stealth_mode),
                     context.getResources().getBoolean(R.bool.alp_42447968_pkey_display_stealth_mode_default));
         }// isStealthMode()
 
@@ -156,8 +156,7 @@ public class AlpSettings {
          * @param v       the value.
          */
         public static void setStealthMode(@NonNull Context context, boolean v) {
-            p(context).edit().putBoolean(context.getString(R.string.alp_42447968_pkey_display_stealth_mode), v)
-                    .commit();
+            p(context).edit().putBoolean(context.getString(R.string.alp_42447968_pkey_display_stealth_mode), v).commit();
         }// setStealthMode()
 
         /**
@@ -167,10 +166,9 @@ public class AlpSettings {
          * @return the minimum wired dots allowed for a pattern. Default is {@code 4}.
          */
         public static int getMinWiredDots(@NonNull Context context) {
-            return p(context).getInt(context
-                    .getString(R.string.alp_42447968_pkey_display_min_wired_dots), context.getResources()
-                    .getInteger(
-                            R.integer.alp_42447968_pkey_display_min_wired_dots_default));
+            return p(context).getInt(
+                    context.getString(R.string.alp_42447968_pkey_display_min_wired_dots),
+                    context.getResources().getInteger(R.integer.alp_42447968_pkey_display_min_wired_dots_default));
         }// getMinWiredDots()
 
         /**
@@ -181,10 +179,8 @@ public class AlpSettings {
          * @return the correct value.
          */
         public static int validateMinWiredDots(@NonNull Context context, int v) {
-            if (v <= 0 || v > 9) v = context
-                    .getResources()
-                    .getInteger(
-                            R.integer.alp_42447968_pkey_display_min_wired_dots_default);
+            if (v <= 0 || v > 9)
+                v = context.getResources().getInteger(R.integer.alp_42447968_pkey_display_min_wired_dots_default);
             return v;
         }// validateMinWiredDots()
 
@@ -198,8 +194,7 @@ public class AlpSettings {
          */
         public static void setMinWiredDots(@NonNull Context context, int v) {
             v = validateMinWiredDots(context, v);
-            p(context).edit().putInt(context
-                    .getString(R.string.alp_42447968_pkey_display_min_wired_dots), v).commit();
+            p(context).edit().putInt(context.getString(R.string.alp_42447968_pkey_display_min_wired_dots), v).commit();
         }// setMinWiredDots()
 
         /**
@@ -209,10 +204,9 @@ public class AlpSettings {
          * @return the max retries allowed in mode comparing pattern. Default is {@code 5}.
          */
         public static int getMaxRetries(@NonNull Context context) {
-            return p(context).getInt(context
-                    .getString(R.string.alp_42447968_pkey_display_max_retries), context.getResources()
-                    .getInteger(
-                            R.integer.alp_42447968_pkey_display_max_retries_default));
+            return p(context).getInt(
+                    context.getString(R.string.alp_42447968_pkey_display_max_retries),
+                    context.getResources().getInteger(R.integer.alp_42447968_pkey_display_max_retries_default));
         }// getMaxRetries()
 
         /**
@@ -223,10 +217,8 @@ public class AlpSettings {
          * @return the correct value.
          */
         public static int validateMaxRetries(@NonNull Context context, int v) {
-            if (v <= 0) v = context
-                    .getResources()
-                    .getInteger(
-                            R.integer.alp_42447968_pkey_display_max_retries_default);
+            if (v <= 0)
+                v = context.getResources().getInteger(R.integer.alp_42447968_pkey_display_max_retries_default);
             return v;
         }// validateMaxRetries()
 
@@ -240,8 +232,7 @@ public class AlpSettings {
          */
         public static void setMaxRetries(@NonNull Context context, int v) {
             v = validateMaxRetries(context, v);
-            p(context).edit().putInt(context
-                    .getString(R.string.alp_42447968_pkey_display_max_retries), v).commit();
+            p(context).edit().putInt(context.getString(R.string.alp_42447968_pkey_display_max_retries), v).commit();
         }// setMaxRetries()
 
         /**
@@ -251,10 +242,9 @@ public class AlpSettings {
          * @return the wired dots for a "CAPTCHA" pattern. Default is {@code 4}.
          */
         public static int getCaptchaWiredDots(@NonNull Context context) {
-            return p(context).getInt(context
-                    .getString(R.string.alp_42447968_pkey_display_captcha_wired_dots), context.getResources()
-                    .getInteger(
-                            R.integer.alp_42447968_pkey_display_captcha_wired_dots_default));
+            return p(context).getInt(
+                    context.getString(R.string.alp_42447968_pkey_display_captcha_wired_dots),
+                    context.getResources().getInteger(R.integer.alp_42447968_pkey_display_captcha_wired_dots_default));
         }// getCaptchaWiredDots()
 
         /**
@@ -265,10 +255,8 @@ public class AlpSettings {
          * @return the correct value.
          */
         public static int validateCaptchaWiredDots(@NonNull Context context, int v) {
-            if (v <= 0 || v > 9) v = context
-                    .getResources()
-                    .getInteger(
-                            R.integer.alp_42447968_pkey_display_captcha_wired_dots_default);
+            if (v <= 0 || v > 9)
+                v = context.getResources().getInteger(R.integer.alp_42447968_pkey_display_captcha_wired_dots_default);
             return v;
         }// validateCaptchaWiredDots()
 
@@ -282,8 +270,7 @@ public class AlpSettings {
          */
         public static void setCaptchaWiredDots(@NonNull Context context, int v) {
             v = validateCaptchaWiredDots(context, v);
-            p(context).edit().putInt(context
-                    .getString(R.string.alp_42447968_pkey_display_captcha_wired_dots), v).commit();
+            p(context).edit().putInt(context.getString(R.string.alp_42447968_pkey_display_captcha_wired_dots), v).commit();
         }// setCaptchaWiredDots()
 
     }// Display
@@ -323,7 +310,8 @@ public class AlpSettings {
          * @return {@code true} or {@code false}. Default is {@code false}.
          */
         public static boolean isAutoSavePattern(@NonNull Context context) {
-            return p(context).getBoolean(context.getString(R.string.alp_42447968_pkey_sys_auto_save_pattern),
+            return p(context).getBoolean(
+                    context.getString(R.string.alp_42447968_pkey_sys_auto_save_pattern),
                     context.getResources().getBoolean(R.bool.alp_42447968_pkey_sys_auto_save_pattern_default));
         }// isAutoSavePattern()
 
@@ -336,8 +324,7 @@ public class AlpSettings {
          * @param v       the auto-save mode.
          */
         public static void setAutoSavePattern(@NonNull Context context, boolean v) {
-            p(context).edit().putBoolean(context.getString(R.string.alp_42447968_pkey_sys_auto_save_pattern), v)
-                    .commit();
+            p(context).edit().putBoolean(context.getString(R.string.alp_42447968_pkey_sys_auto_save_pattern), v).commit();
             if (!v) setPattern(context, null);
         }// setAutoSavePattern()
 
@@ -359,8 +346,9 @@ public class AlpSettings {
          * @param pattern the pattern, can be {@code null} to reset it.
          */
         public static void setPattern(@NonNull Context context, @Nullable char[] pattern) {
-            p(context).edit().putString(context.getString(R.string.alp_42447968_pkey_sys_pattern), pattern != null ?
-                    new String(pattern) : null).commit();
+            p(context).edit()
+                    .putString(context.getString(R.string.alp_42447968_pkey_sys_pattern), pattern != null ? new String(pattern) : null)
+                    .commit();
         }// setPattern()
 
         /**
@@ -370,8 +358,7 @@ public class AlpSettings {
          * @return the full name of encrypter class. Default is {@code null}.
          */
         public static char[] getEncrypterClass(@NonNull Context context) {
-            String clazz = p(context).getString(context.getString(R.string.alp_42447968_pkey_sys_encrypter_class),
-                    null);
+            String clazz = p(context).getString(context.getString(R.string.alp_42447968_pkey_sys_encrypter_class), null);
             return clazz == null ? null : clazz.toCharArray();
         }// getEncrypterClass()
 
@@ -396,8 +383,9 @@ public class AlpSettings {
          * @param clazz   the full name of encrypter class, can be {@code null} if you don't want to use it.
          */
         public static void setEncrypterClass(@NonNull Context context, @Nullable char[] clazz) {
-            p(context).edit().putString(context.getString(R.string.alp_42447968_pkey_sys_encrypter_class),
-                    clazz != null ? new String(clazz) : null).commit();
+            p(context).edit()
+                    .putString(context.getString(R.string.alp_42447968_pkey_sys_encrypter_class), clazz != null ? new String(clazz) : null)
+                    .commit();
         }// setEncrypterClass()
 
     }// Security

@@ -129,19 +129,21 @@ public class LockPatternUtils {
     }// patternToSha1()
 
     /**
-     * Generates a random "CAPTCHA" pattern. By saying "CAPTCHA", this method ensures that the generated pattern is easy
-     * for the user to re-draw. <p> <b>Notes:</b> This method is <b>not</b> optimized and <b>not</b> benchmarked yet for
-     * large size of the pattern's matrix. Currently it works fine with a matrix of {@code 3x3} cells. Be careful when
-     * the size increases. </p>
+     * Generates a random "CAPTCHA" pattern. By saying "CAPTCHA", this method ensures that the generated pattern is easy for the user to re-draw.
+     * <p/>
+     * <strong>Notes:</strong> This method is <b>not</b> optimized and <b>not</b> benchmarked yet for large size of the pattern's matrix.
+     * Currently it works fine with a matrix of {@code 3x3} cells. Be careful when the size increases.
+     * <p/>
      *
      * @param size the size of the pattern to be generated.
      * @return the generated pattern.
-     * @throws IndexOutOfBoundsException if {@code size <= 0} or {@code size > } {@link LockPatternView#MATRIX_SIZE}.
+     * @throws IndexOutOfBoundsException if {@code size <= 0} or {@code size > }
+     *                                   {@link haibison.android.lockpattern.widget.LockPatternView#MATRIX_SIZE LockPatternView.MATRIX_SIZE}.
      * @author Hai Bison
      * @since v2.7 beta
      */
     @NonNull
-    public static ArrayList<LockPatternView.Cell> genCaptchaPattern(int size) throws IndexOutOfBoundsException {
+    public static ArrayList<LockPatternView.Cell> genCaptchaPattern(final int size) throws IndexOutOfBoundsException {
         if (size <= 0 || size > LockPatternView.MATRIX_SIZE)
             throw new IndexOutOfBoundsException("`size` must be in range [1, `LockPatternView.MATRIX_SIZE`]");
 
@@ -194,69 +196,69 @@ public class LockPatternUtils {
                 final int[] lines = Randoms.randIntArray(4);
                 for (int line : lines) {
                     switch (line) {
-                        case 0: {
-                            if (rowA >= 0) {
-                                randomValues = Randoms.randIntArray(Math.max(0, colA),
-                                        Math.min(LockPatternView.MATRIX_WIDTH, colC + 1));
-                                for (int c : randomValues) {
-                                    lastId = rowA * LockPatternView.MATRIX_WIDTH + c;
-                                    if (usedIds.contains(lastId))
-                                        lastId = -1;
-                                    else
-                                        break;
-                                }
+                    case 0: {
+                        if (rowA >= 0) {
+                            randomValues = Randoms.randIntArray(Math.max(0, colA),
+                                    Math.min(LockPatternView.MATRIX_WIDTH, colC + 1));
+                            for (int c : randomValues) {
+                                lastId = rowA * LockPatternView.MATRIX_WIDTH + c;
+                                if (usedIds.contains(lastId))
+                                    lastId = -1;
+                                else
+                                    break;
                             }
+                        }
 
-                            break;
-                        }// AB
+                        break;
+                    }// AB
 
-                        case 1: {
-                            if (colC < LockPatternView.MATRIX_WIDTH) {
-                                randomValues = Randoms.randIntArray(Math.max(0, rowA + 1),
-                                        Math.min(LockPatternView.MATRIX_WIDTH, rowC + 1));
-                                for (int r : randomValues) {
-                                    lastId = r * LockPatternView.MATRIX_WIDTH + colC;
-                                    if (usedIds.contains(lastId))
-                                        lastId = -1;
-                                    else
-                                        break;
-                                }
+                    case 1: {
+                        if (colC < LockPatternView.MATRIX_WIDTH) {
+                            randomValues = Randoms.randIntArray(Math.max(0, rowA + 1),
+                                    Math.min(LockPatternView.MATRIX_WIDTH, rowC + 1));
+                            for (int r : randomValues) {
+                                lastId = r * LockPatternView.MATRIX_WIDTH + colC;
+                                if (usedIds.contains(lastId))
+                                    lastId = -1;
+                                else
+                                    break;
                             }
+                        }
 
-                            break;
-                        }// BC
+                        break;
+                    }// BC
 
-                        case 2: {
-                            if (rowC < LockPatternView.MATRIX_WIDTH) {
-                                randomValues = Randoms.randIntArray(Math.max(0, colA),
-                                        Math.min(LockPatternView.MATRIX_WIDTH, colC));
-                                for (int c : randomValues) {
-                                    lastId = rowC * LockPatternView.MATRIX_WIDTH + c;
-                                    if (usedIds.contains(lastId))
-                                        lastId = -1;
-                                    else
-                                        break;
-                                }
+                    case 2: {
+                        if (rowC < LockPatternView.MATRIX_WIDTH) {
+                            randomValues = Randoms.randIntArray(Math.max(0, colA),
+                                    Math.min(LockPatternView.MATRIX_WIDTH, colC));
+                            for (int c : randomValues) {
+                                lastId = rowC * LockPatternView.MATRIX_WIDTH + c;
+                                if (usedIds.contains(lastId))
+                                    lastId = -1;
+                                else
+                                    break;
                             }
+                        }
 
-                            break;
-                        }// DC
+                        break;
+                    }// DC
 
-                        case 3: {
-                            if (colA >= 0) {
-                                randomValues = Randoms.randIntArray(Math.max(0, rowA + 1),
-                                        Math.min(LockPatternView.MATRIX_WIDTH, rowC));
-                                for (int r : randomValues) {
-                                    lastId = r * LockPatternView.MATRIX_WIDTH + colA;
-                                    if (usedIds.contains(lastId))
-                                        lastId = -1;
-                                    else
-                                        break;
-                                }
+                    case 3: {
+                        if (colA >= 0) {
+                            randomValues = Randoms.randIntArray(Math.max(0, rowA + 1),
+                                    Math.min(LockPatternView.MATRIX_WIDTH, rowC));
+                            for (int r : randomValues) {
+                                lastId = r * LockPatternView.MATRIX_WIDTH + colA;
+                                if (usedIds.contains(lastId))
+                                    lastId = -1;
+                                else
+                                    break;
                             }
+                        }
 
-                            break;
-                        }// AD
+                        break;
+                    }// AD
                     }
 
                     if (lastId >= 0) break;
