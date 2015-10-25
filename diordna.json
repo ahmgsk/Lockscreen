@@ -1,6 +1,6 @@
 {
     "source": "../source",
-    "target": ".",
+    "target": "apidocs",
     "api": 23,
     "source_paths": [
         "app/src/main/java",
