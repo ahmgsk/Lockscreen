@@ -1,7 +1,6 @@
 {
     "source": "../../source/",
     "target": "../apidocs",
-    "api": 23,
     "source_paths": [
         "app/src/main/java",
         "app/build/generated/source/buildConfig/release",
@@ -15,5 +14,6 @@
     ],
     "window_title": "android-lockpattern",
     "doc_title": "<a href=\"https://github.com/haibison/android-lockpattern\" target=\"_blank\">android-lockpattern</a>",
-    "doc_header": "<a href=\"https://github.com/haibison/android-lockpattern\" target=\"_blank\">android-lockpattern on GitHub</a>"
+    "doc_header": "<a href=\"https://github.com/haibison/android-lockpattern\" target=\"_blank\">android-lockpattern on GitHub</a>",
+    "doc_footer": "<a href=\"https://play.google.com/store/apps/details?id=group.pals.android.lib.ui.lockpattern.demo\" target=\"_blank\">Demo on Google Play</a>"
 }
