@@ -111,8 +111,7 @@ public class FloatAnimator {
      *
      * @param start    start value.
      * @param end      end value.
-     * @param duration duration, in milliseconds. This should not be long, as delay value between animation frame is
-     *                 just 1 millisecond.
+     * @param duration duration, in milliseconds. This should not be long, as delay value between animation frames is just 1 millisecond.
      */
     public FloatAnimator(float start, float end, long duration) {
         mStartValue = start;

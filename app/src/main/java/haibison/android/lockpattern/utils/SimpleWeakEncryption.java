@@ -41,7 +41,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * The <b>simple-and-weak</b> encryption utilities.
+ * The <strong>simple-and-weak</strong> encryption utilities.
  *
  * @author Hai Bison
  */

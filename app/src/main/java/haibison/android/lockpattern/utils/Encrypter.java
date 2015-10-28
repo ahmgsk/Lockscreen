@@ -35,7 +35,7 @@ public interface Encrypter {
      * Encrypts {@code pattern}.
      *
      * @param context the context.
-     * @param pattern the pattern in the form of a list of {@link haibison.android.lockpattern.widget.LockPatternView.Cell LockPatternView.Cell}.
+     * @param pattern the pattern in the form of a list of {@link Cell}.
      * @return the encrypted char array of the pattern.
      * @since v2.1 beta
      */

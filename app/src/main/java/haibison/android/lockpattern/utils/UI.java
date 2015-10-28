@@ -137,7 +137,7 @@ public class UI {
     public static void adjustDialogSizeForLargeScreens(@NonNull Window dialogWindow) {
         if (DEBUG) Log.d(CLASSNAME, "adjustDialogSizeForLargeScreens()");
 
-        if (!dialogWindow.isFloating()) return;
+        if ( ! dialogWindow.isFloating()) return;
 
         final ScreenSize screenSize = ScreenSize.getCurrent(dialogWindow.getContext());
         switch (screenSize) {

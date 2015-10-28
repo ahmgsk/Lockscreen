@@ -58,8 +58,8 @@ public class Randoms {
     }// randInt()
 
     /**
-     * Generates a random integer array which has length of {@code end - start}, and is filled by all values from {@code
-     * start} to {@code end - 1} in randomized orders.
+     * Generates a random integer array which has length of {@code end - start}, and is filled by all values from {@code start} to {@code
+     * end - 1} in randomized orders.
      *
      * @param start the starting value.
      * @param end   the ending value.
@@ -83,8 +83,8 @@ public class Randoms {
     }// randIntArray()
 
     /**
-     * Generates a random integer array which has length of {@code end}, and is filled by all values from {@code 0} to
-     * {@code end - 1} in randomized orders.
+     * Generates a random integer array which has length of {@code end}, and is filled by all values from {@code 0} to {@code end - 1} in
+     * randomized orders.
      *
      * @param end the ending value.
      * @return the random integer array. If {@code end <= start}, an empty array returns.

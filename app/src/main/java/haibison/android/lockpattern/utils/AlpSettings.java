@@ -20,6 +20,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,11 +29,10 @@ import android.support.annotation.Nullable;
 import haibison.android.lockpattern.R;
 
 /**
- * All settings for the library. They are stored in {@link android.content.SharedPreferences SharedPreferences}.
+ * All settings for the library. They are stored in {@link SharedPreferences}.
  * <p/>
- * For some options, you can set them directly via tag {@code <meta-data>} inside tag {@code <activity>} in
- * AndroidManifest.xml. Refer to setter methods for details. Note that the values in the manifest have higher priority
- * than the ones from this class.
+ * For some options, you can set them directly via tag {@code <meta-data>} inside tag {@code <activity>} in your {@code AndroidManifest.xml}.
+ * Refer to setter methods for details. Note that the values in the manifest have <em>higher priority</em> than the ones from this class.
  *
  * @author Hai Bison
  */
@@ -64,10 +65,10 @@ public class AlpSettings {
     }// genDatabaseFilename()
 
     /**
-     * Gets new {@link android.content.SharedPreferences SharedPreferences}.
+     * Gets new {@link SharedPreferences}.
      *
      * @param context the context.
-     * @return {@link android.content.SharedPreferences SharedPreferences}.
+     * @return {@link SharedPreferences}.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @NonNull
@@ -80,11 +81,10 @@ public class AlpSettings {
 
     /**
      * Setup {@code pm} to use global unique filename and global access mode. You must use this method if you let the user change preferences
-     * via UI (such as {@link android.preference.PreferenceActivity PreferenceActivity},
-     * {@link android.preference.PreferenceFragment PreferenceFragment}...)
+     * via UI, such as {@link PreferenceActivity}, {@link PreferenceFragment}...
      *
      * @param context the context.
-     * @param pm      {@link android.preference.PreferenceManager PreferenceManager}.
+     * @param pm      {@link PreferenceManager}.
      * @since v2.6 beta
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -102,28 +102,28 @@ public class AlpSettings {
     public static class Display {
 
         /**
-         * Name to use for tag {@code <meta-data>} in AndroidManifest.xml.
+         * Name to use for tag {@code <meta-data>} in {@code AndroidManifest.xml}.
          *
          * @see #setStealthMode(Context, boolean)
          */
         public static final String METADATA_STEALTH_MODE = "stealthMode";
 
         /**
-         * Name to use for tag {@code <meta-data>} in AndroidManifest.xml.
+         * Name to use for tag {@code <meta-data>} in {@code AndroidManifest.xml}.
          *
          * @see #setMinWiredDots(Context, int)
          */
         public static final String METADATA_MIN_WIRED_DOTS = "minWiredDots";
 
         /**
-         * Name to use for tag {@code <meta-data>} in AndroidManifest.xml.
+         * Name to use for tag {@code <meta-data>} in {@code AndroidManifest.xml}.
          *
          * @see #setMaxRetries(Context, int)
          */
         public static final String METADATA_MAX_RETRIES = "maxRetries";
 
         /**
-         * Name to use for tag {@code <meta-data>} in AndroidManifest.xml.
+         * Name to use for tag {@code <meta-data>} in {@code AndroidManifest.xml}.
          *
          * @see #setCaptchaWiredDots(Context, int)
          */
@@ -150,7 +150,7 @@ public class AlpSettings {
         /**
          * Sets stealth mode.
          * <p/>
-         * You can set this value in AndroidManifest.xml with {@link #METADATA_STEALTH_MODE}.
+         * You can set this value in {@code AndroidManifest.xml} with {@link #METADATA_STEALTH_MODE}.
          *
          * @param context the context.
          * @param v       the value.
@@ -187,7 +187,7 @@ public class AlpSettings {
         /**
          * Sets minimum wired dots allowed for a pattern.
          * <p/>
-         * You can set this value in AndroidManifest.xml with {@link #METADATA_MIN_WIRED_DOTS}.
+         * You can set this value in {@code AndroidManifest.xml} with {@link #METADATA_MIN_WIRED_DOTS}.
          *
          * @param context the context.
          * @param v       the minimum wired dots allowed for a pattern.
@@ -225,7 +225,7 @@ public class AlpSettings {
         /**
          * Sets max retries allowed in mode comparing pattern.
          * <p/>
-         * You can set this value in AndroidManifest.xml with {@link #METADATA_MAX_RETRIES}.
+         * You can set this value in {@code AndroidManifest.xml} with {@link #METADATA_MAX_RETRIES}.
          *
          * @param context the context.
          * @param v       the max retries allowed in mode comparing pattern.
@@ -263,7 +263,7 @@ public class AlpSettings {
         /**
          * Sets wired dots for a "CAPTCHA" pattern.
          * <p/>
-         * You can set this value in AndroidManifest.xml with {@link #METADATA_CAPTCHA_WIRED_DOTS}.
+         * You can set this value in {@code AndroidManifest.xml} with {@link #METADATA_CAPTCHA_WIRED_DOTS}.
          *
          * @param context the context.
          * @param v       the wired dots for a "CAPTCHA" pattern.
@@ -283,7 +283,7 @@ public class AlpSettings {
     public static class Security {
 
         /**
-         * Name to use for tag {@code <meta-data>} in AndroidManifest.xml.
+         * Name to use for tag {@code <meta-data>} in {@code AndroidManifest.xml}.
          *
          * @see #setEncrypterClass(Context, char[])
          * @see #setEncrypterClass(Context, Class)
@@ -291,7 +291,7 @@ public class AlpSettings {
         public static final String METADATA_ENCRYPTER_CLASS = "encrypterClass";
 
         /**
-         * Name to use for tag {@code <meta-data>} in AndroidManifest.xml.
+         * Name to use for tag {@code <meta-data>} in {@code AndroidManifest.xml}.
          *
          * @see #setAutoSavePattern(Context, boolean)
          */
@@ -318,7 +318,7 @@ public class AlpSettings {
         /**
          * Sets auto-save pattern mode.
          * <p/>
-         * You can set this value in AndroidManifest.xml with {@link #METADATA_AUTO_SAVE_PATTERN}.
+         * You can set this value in {@code AndroidManifest.xml} with {@link #METADATA_AUTO_SAVE_PATTERN}.
          *
          * @param context the context.
          * @param v       the auto-save mode.
@@ -335,7 +335,7 @@ public class AlpSettings {
          * @return the pattern. Default is {@code null}.
          */
         public static char[] getPattern(@NonNull Context context) {
-            String pattern = p(context).getString(context.getString(R.string.alp_42447968_pkey_sys_pattern), null);
+            final String pattern = p(context).getString(context.getString(R.string.alp_42447968_pkey_sys_pattern), null);
             return pattern == null ? null : pattern.toCharArray();
         }// getPattern()
 
@@ -358,14 +358,14 @@ public class AlpSettings {
          * @return the full name of encrypter class. Default is {@code null}.
          */
         public static char[] getEncrypterClass(@NonNull Context context) {
-            String clazz = p(context).getString(context.getString(R.string.alp_42447968_pkey_sys_encrypter_class), null);
+            final String clazz = p(context).getString(context.getString(R.string.alp_42447968_pkey_sys_encrypter_class), null);
             return clazz == null ? null : clazz.toCharArray();
         }// getEncrypterClass()
 
         /**
          * Sets encrypter class.
          * <p/>
-         * You can set this value in AndroidManifest.xml with {@link #METADATA_ENCRYPTER_CLASS}.
+         * You can set this value in {@code AndroidManifest.xml} with {@link #METADATA_ENCRYPTER_CLASS}.
          *
          * @param context the context.
          * @param clazz   the encrypter class, can be {@code null} if you don't want to use it.
@@ -377,7 +377,7 @@ public class AlpSettings {
         /**
          * Sets encrypter class.
          * <p/>
-         * You can set this value in AndroidManifest.xml with {@link #METADATA_ENCRYPTER_CLASS}.
+         * You can set this value in {@code AndroidManifest.xml} with {@link #METADATA_ENCRYPTER_CLASS}.
          *
          * @param context the context.
          * @param clazz   the full name of encrypter class, can be {@code null} if you don't want to use it.

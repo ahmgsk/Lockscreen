@@ -47,6 +47,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import haibison.android.lockpattern.utils.AlpSettings;
+import haibison.android.lockpattern.utils.AlpSettings.Display;
+import haibison.android.lockpattern.utils.AlpSettings.Security;
 import haibison.android.lockpattern.utils.Encrypter;
 import haibison.android.lockpattern.utils.InvalidEncrypterException;
 import haibison.android.lockpattern.utils.LoadingView;
@@ -69,8 +71,10 @@ import static haibison.android.lockpattern.utils.AlpSettings.Security.METADATA_E
 /**
  * Main activity for this library.
  * <p>
- * You can deliver result to {@link android.app.PendingIntent PendingIntent}'s and/ or {@link android.os.ResultReceiver ResultReceiver} too.
- * See {@link #EXTRA_PENDING_INTENT_OK}, {@link #EXTRA_PENDING_INTENT_CANCELLED} and {@link #EXTRA_RESULT_RECEIVER} for more details.
+ * There's a utility class {@link IntentBuilder} which helps you build intent for this activity.
+ * <p>
+ * You can deliver result to {@link PendingIntent}'s and/or {@link ResultReceiver} too. See {@link #EXTRA_PENDING_INTENT_OK}, {@link
+ * #EXTRA_PENDING_INTENT_CANCELLED} and {@link #EXTRA_RESULT_RECEIVER} for more details.
  * <p>
  * <h1>NOTES</h1>
  * <p>
@@ -79,10 +83,10 @@ import static haibison.android.lockpattern.utils.AlpSettings.Security.METADATA_E
  * strangely (we don't cover those cases).</li>
  * <li>You must use one of the themes that this library supports. They start with {@code R.style.Alp_42447968_Theme_*}. The reason is the themes
  * contain resources that the library needs.</li>
- * <li>With {@link #ACTION_COMPARE_PATTERN}, there are <b><i>4 possible result codes</i></b>: {@link android.app.Activity#RESULT_OK RESULT_OK},
- * {@link android.app.Activity#RESULT_CANCELED RESULT_CANCELED}, {@link #RESULT_FAILED} and {@link #RESULT_FORGOT_PATTERN}.</li>
- * <li>With {@link #ACTION_VERIFY_CAPTCHA}, there are <b><i>3 possible result codes</i></b>: {@link android.app.Activity#RESULT_OK RESULT_OK},
- * {@link android.app.Activity#RESULT_CANCELED RESULT_CANCELED}, and {@link #RESULT_FAILED}.</li>
+ * <li>With {@link #ACTION_COMPARE_PATTERN}, there are <strong><em>4 possible result codes</em></strong>: {@link #RESULT_OK}, {@link
+ * #RESULT_CANCELED}, {@link #RESULT_FAILED} and {@link #RESULT_FORGOT_PATTERN}.</li>
+ * <li>With {@link #ACTION_VERIFY_CAPTCHA}, there are <strong><em>3 possible result codes</em></strong>: {@link #RESULT_OK}, {@link
+ * #RESULT_CANCELED}, and {@link #RESULT_FAILED}.</li>
  * </ul>
  *
  * @author Hai Bison
@@ -93,12 +97,11 @@ public class LockPatternActivity extends Activity {
     private static final String CLASSNAME = LockPatternActivity.class.getName();
 
     /**
-     * Use this action to create new pattern. You can provide an {@link haibison.android.lockpattern.utils.Encrypter Encrypter} with {@link
-     * haibison.android.lockpattern.utils.AlpSettings.Security#setEncrypterClass(android.content.Context, Class) Security.setEncrypterClass()}
-     * to improve security.
+     * Use this action to create new pattern. You can provide an {@link Encrypter} with {@link
+     * Security#setEncrypterClass(android.content.Context, Class)} to improve security.
      * <p>
-     * If the user created a pattern, {@link android.app.Activity#RESULT_OK RESULT_OK} returns with the pattern ({@link #EXTRA_PATTERN}).
-     * Otherwise {@link android.app.Activity#RESULT_CANCELED RESULT_CANCELED} returns.
+     * If the user created a pattern, {@link #RESULT_OK} returns with the pattern ({@link #EXTRA_PATTERN}). Otherwise {@link #RESULT_CANCELED}
+     * returns.
      *
      * @see #EXTRA_PENDING_INTENT_OK
      * @see #EXTRA_PENDING_INTENT_CANCELLED
@@ -109,16 +112,14 @@ public class LockPatternActivity extends Activity {
     /**
      * Use this action to compare pattern. You provide the pattern to be compared with {@link #EXTRA_PATTERN}.
      * <p>
-     * If you enabled feature auto-save pattern before (with
-     * {@link haibison.android.lockpattern.utils.AlpSettings.Security#setAutoSavePattern(Context, boolean) Security.setAutoSavePattern()}), then
-     * you don't need {@link #EXTRA_PATTERN} at this time. But if you use this extra, its priority is higher than the one stored in shared
-     * preferences.
+     * If you enabled feature auto-save pattern before (with {@link Security#setAutoSavePattern(Context, boolean)}), then you don't need {@link
+     * #EXTRA_PATTERN} at this time. But if you use this extra, its priority is <em>higher</em> than the one stored in shared preferences.
      * <p>
      * You can use {@link #EXTRA_PENDING_INTENT_FORGOT_PATTERN} to help your users in case they forgot the patterns.
      * <p>
-     * If the user passes, {@link android.app.Activity#RESULT_OK RESULT_OK} returns. If not, {@link #RESULT_FAILED} returns.
+     * If the user passes, {@link #RESULT_OK} returns. If not, {@link #RESULT_FAILED} returns.
      * <p>
-     * If the user cancels the task, {@link android.app.Activity#RESULT_CANCELED RESULT_CANCELED} returns.
+     * If the user cancels the task, {@link #RESULT_CANCELED} returns.
      * <p>
      * In any case, extra {@link #EXTRA_RETRY_COUNT} will always be available in the intent result.
      *
@@ -134,15 +135,15 @@ public class LockPatternActivity extends Activity {
     /**
      * Use this action to let the activity generate a random pattern and ask the user to re-draw it to verify.
      * <p>
-     * The default length of the auto-generated pattern is {@code 4}. You can change it with {@link
-     * haibison.android.lockpattern.utils.AlpSettings.Display#setCaptchaWiredDots(Context, int) Display.setCaptchaWiredDots()}.
+     * The default length of the auto-generated pattern is {@code 4}. You can change it with {@link Display#setCaptchaWiredDots(Context, int)}.
      *
      * @since v2.7 beta
      */
     public static final String ACTION_VERIFY_CAPTCHA = CLASSNAME + ".VERIFY_CAPTCHA";
 
     /**
-     * If you use {@link #ACTION_COMPARE_PATTERN} and the user fails to "login" after a number of tries, this activity will finish with this result code.
+     * If you use {@link #ACTION_COMPARE_PATTERN} and the user fails to "login" after a number of tries, this activity will finish with this
+     * result code.
      *
      * @see #ACTION_COMPARE_PATTERN
      * @see #EXTRA_RETRY_COUNT
@@ -167,8 +168,9 @@ public class LockPatternActivity extends Activity {
     public static final String EXTRA_RETRY_COUNT = CLASSNAME + ".RETRY_COUNT";
 
     /**
-     * Sets value of this key to a theme in {@code R.style.Alp_42447968_Theme_*} . Default is the one you set in your {@code AndroidManifest.xml}.
-     * Note that theme {@link R.style#Alp_42447968_Theme_Light_DarkActionBar} is available in API 4+, but it only works in API 14+.
+     * Sets value of this key to a theme in {@code R.style.Alp_42447968_Theme_*} . Default is the one you set in your {@code
+     * AndroidManifest.xml}. Note that theme {@code R.style#Alp_42447968_Theme_Light_DarkActionBar} is available in API 4+, but it only works in
+     * API 14+.
      *
      * @since v1.5.3 beta
      */
@@ -179,8 +181,8 @@ public class LockPatternActivity extends Activity {
      * <p>
      * <ul>
      * <li>If you use encrypter, it should be an encrypted array.</li>
-     * <li>If you don't use encrypter, it should be the SHA-1 value of the actual pattern. You can generate the value by
-     * {@link haibison.android.lockpattern.widget.LockPatternUtils#patternToSha1(List) LockPatternUtils.patternToSha1()}.</li>
+     * <li>If you don't use encrypter, it should be the SHA-1 value of the actual pattern. You can generate the value by {@link
+     * LockPatternUtils#patternToSha1(List)}.</li>
      * </ul>
      *
      * @since v2 beta
@@ -188,52 +190,50 @@ public class LockPatternActivity extends Activity {
     public static final String EXTRA_PATTERN = CLASSNAME + ".PATTERN";
 
     /**
-     * You can provide an {@link android.os.ResultReceiver ResultReceiver} with this key. The activity will notify your receiver the same result
-     * code and intent data as you will receive them in {@link #onActivityResult(int, int, Intent)}.
+     * You can provide an {@link ResultReceiver} with this key. The activity will notify your receiver the same result code and intent data as
+     * you will receive them in {@link #onActivityResult(int, int, Intent)}.
      *
      * @since v2.4 beta
      */
     public static final String EXTRA_RESULT_RECEIVER = CLASSNAME + ".RESULT_RECEIVER";
 
     /**
-     * Put a {@link android.app.PendingIntent PendingIntent} into this key. It will be sent before {@link android.app.Activity#RESULT_OK RESULT_OK}
-     * will be returning. If you were calling this activity with {@link #ACTION_CREATE_PATTERN}, key {@link #EXTRA_PATTERN} will be attached to
-     * the original intent which the pending intent holds.
+     * Put a {@link PendingIntent} into this key. It will be sent before {@link #RESULT_OK} will be returning. If you were calling this activity
+     * with {@link #ACTION_CREATE_PATTERN}, key {@link #EXTRA_PATTERN} will be attached to the original intent which the pending intent holds.
      * <p>
      * <h1>Notes</h1>
      * <p>
      * <ul>
-     * <li>If you're going to use an activity, you don't need {@link android.content.Intent#FLAG_ACTIVITY_NEW_TASK FLAG_ACTIVITY_NEW_TASK} for
-     * the intent, since the library will call it inside {@link LockPatternActivity} .</li>
+     * <li>If you're going to use an activity, you don't need {@link Intent#FLAG_ACTIVITY_NEW_TASK} for the intent, since the library will call
+     * it inside {@link LockPatternActivity} .</li>
      * </ul>
      */
     public static final String EXTRA_PENDING_INTENT_OK = CLASSNAME + ".PENDING_INTENT_OK";
 
     /**
-     * Put a {@link android.app.PendingIntent PendingIntent} into this key. It will be sent before
-     * {@link android.app.Activity#RESULT_CANCELED RESULT_CANCELED} will be returning.
+     * Put a {@link PendingIntent} into this key. It will be sent before {@link #RESULT_CANCELED} will be returning.
      * <p>
      * <h1>Notes</h1>
      * <p>
      * <ul>
-     * <li>If you're going to use an activity, you don't need {@link android.content.Intent#FLAG_ACTIVITY_NEW_TASK FLAG_ACTIVITY_NEW_TASK} for
-     * the intent, since the library will call it inside {@link LockPatternActivity} .</li>
+     * <li>If you're going to use an activity, you don't need {@link Intent#FLAG_ACTIVITY_NEW_TASK} for the intent, since the library will call
+     * it inside {@link LockPatternActivity} .</li>
      * </ul>
      */
     public static final String EXTRA_PENDING_INTENT_CANCELLED = CLASSNAME + ".PENDING_INTENT_CANCELLED";
 
     /**
-     * You put a {@link android.app.PendingIntent PendingIntent} into this extra. The library will show a button <i>"Forgot pattern?"</i> and call
-     * your intent later when the user taps it.
+     * You put a {@link PendingIntent} into this extra. The library will show a button <kbd>"Forgot pattern?"</kbd> and call your intent later
+     * when the user taps it.
      * <p>
      * <h1>Notes</h1>
      * <p>
      * <ul>
-     * <li>If you use an activity, you don't need {@link android.content.Intent#FLAG_ACTIVITY_NEW_TASK FLAG_ACTIVITY_NEW_TASK} for the intent,
-     * since the library will call it inside {@link LockPatternActivity}.</li>
-     * <li>{@link LockPatternActivity} will finish with {@link #RESULT_FORGOT_PATTERN} <i><b>after</b> making a call</i> to start your pending
-     * intent.</li>
-     * <li>It is your responsibility to make sure the Intent is good. The library doesn't cover any errors when calling your intent.</li>
+     * <li>If you use an activity, you don't need {@link Intent#FLAG_ACTIVITY_NEW_TASK} for the intent, since the library will call it inside
+     * {@link LockPatternActivity}.</li>
+     * <li>{@link LockPatternActivity} will finish with {@link #RESULT_FORGOT_PATTERN} <em><strong>after</strong> making a call</em> to start
+     * your pending intent.</li>
+     * <li>It is your responsibility to make sure the intent is good. The library doesn't cover any errors when calling your intent.</li>
      * </ul>
      *
      * @author Thanks to Yan Cheng Cheok for his idea.
@@ -267,8 +267,7 @@ public class LockPatternActivity extends Activity {
          */
         @NonNull
         public static IntentBuilder newPatternComparator(@NonNull Context context, @Nullable char[] pattern) {
-            return new IntentBuilder(context, LockPatternActivity.class, ACTION_COMPARE_PATTERN)
-                    .setPattern(pattern);
+            return new IntentBuilder(context, LockPatternActivity.class, ACTION_COMPARE_PATTERN).setPattern(pattern);
         }//newPatternComparator()
 
         /**
@@ -303,8 +302,7 @@ public class LockPatternActivity extends Activity {
          * @param clazz   activity class.
          * @param action  action.
          */
-        public IntentBuilder(@NonNull Context context, @NonNull Class<? extends Activity> clazz,
-                             @NonNull String action) {
+        public IntentBuilder(@NonNull Context context, @NonNull Class<? extends Activity> clazz, @NonNull String action) {
             mContext = context;
             mIntent = new Intent(action, null, context, clazz);
         }//IntentBuilder()
@@ -330,8 +328,7 @@ public class LockPatternActivity extends Activity {
         }//build()
 
         /**
-         * Builds the intent via {@link #build()} and calls {@link android.app.Activity#startActivityForResult(Intent, int)
-         * Activity.startActivityForResult()}.
+         * Builds the intent via {@link #build()} and calls {@link #startActivityForResult(Intent, int)}.
          *
          * @param activity    your activity.
          * @param requestCode request code.
@@ -341,8 +338,7 @@ public class LockPatternActivity extends Activity {
         }//startForResult()
 
         /**
-         * Builds the intent via {@link #build()} and calls {@link android.app.Activity#startActivityForResult(Intent, int, Bundle)
-         * Activity.startActivityForResult()}.
+         * Builds the intent via {@link #build()} and calls {@link #startActivityForResult(Intent, int, Bundle)}.
          *
          * @param activity    your activity.
          * @param requestCode request code.
@@ -354,8 +350,7 @@ public class LockPatternActivity extends Activity {
         }//startForResult()
 
         /**
-         * Builds the intent via {@link #build()} and calls {@link android.app.Fragment#startActivityForResult(Intent, int)
-         * Fragment.startActivityForResult()}.
+         * Builds the intent via {@link #build()} and calls {@link Fragment#startActivityForResult(Intent, int)}.
          *
          * @param fragment    your fragment.
          * @param requestCode request code.
@@ -366,8 +361,7 @@ public class LockPatternActivity extends Activity {
         }//startForResult()
 
         /**
-         * Builds the intent via {@link #build()} and calls {@link android.app.Fragment#startActivityForResult(Intent, int, Bundle)
-         * Fragment.startActivityForResult()}.
+         * Builds the intent via {@link #build()} and calls {@link Fragment#startActivityForResult(Intent, int, Bundle)}.
          *
          * @param fragment    your fragment.
          * @param requestCode request code.
@@ -579,8 +573,7 @@ public class LockPatternActivity extends Activity {
             final int y = (int) event.getY();
             final int slop = ViewConfiguration.get(this).getScaledWindowTouchSlop();
             final View decorView = getWindow().getDecorView();
-            boolean isOutOfBounds = (x < -slop) || (y < -slop) || (x > (decorView.getWidth() + slop))
-                    || (y > (decorView.getHeight() + slop));
+            boolean isOutOfBounds = (x < -slop) || (y < -slop) || (x > (decorView.getWidth() + slop)) || (y > (decorView.getHeight() + slop));
             if (isOutOfBounds) {
                 finishWithNegativeResult(RESULT_CANCELED);
                 return true;
@@ -787,8 +780,8 @@ public class LockPatternActivity extends Activity {
     }// initContentView()
 
     /**
-     * Compares {@code pattern} to the given pattern ( {@link #ACTION_COMPARE_PATTERN}) or to the generated "CAPTCHA"
-     * pattern ( {@link #ACTION_VERIFY_CAPTCHA}). Then finishes the activity if they match.
+     * Compares {@code pattern} to the given pattern ( {@link #ACTION_COMPARE_PATTERN}) or to the generated "CAPTCHA" pattern ({@link
+     * #ACTION_VERIFY_CAPTCHA}). Then finishes the activity if they match.
      *
      * @param pattern the pattern to be compared.
      */
@@ -825,7 +818,8 @@ public class LockPatternActivity extends Activity {
             protected void onPostExecute(Object result) {
                 super.onPostExecute(result);
 
-                if ((Boolean) result) finishWithResultOk(null);
+                if ((Boolean) result)
+                    finishWithResultOk(null);
                 else {
                     mRetryCount++;
                     mIntentResult.putExtra(EXTRA_RETRY_COUNT, mRetryCount);
@@ -970,7 +964,7 @@ public class LockPatternActivity extends Activity {
     }// finishWithResultOk()
 
     /**
-     * Finishes the activity with negative result ( {@link Activity#RESULT_CANCELED}, {@link #RESULT_FAILED} or {@link
+     * Finishes the activity with negative result ({@link #RESULT_CANCELED}, {@link #RESULT_FAILED} or {@link
      * #RESULT_FORGOT_PATTERN}).
      */
     private void finishWithNegativeResult(int resultCode) {

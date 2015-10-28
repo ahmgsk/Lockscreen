@@ -27,7 +27,7 @@ import android.view.View;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 /**
- * An implementation of {@link android.os.AsyncTask}, used to show a view while doing some background tasks, then hide it when done.
+ * An implementation of {@link AsyncTask}, used to show a view while doing some background tasks, then hide it when done.
  *
  * @author Hai Bison
  */
@@ -61,7 +61,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
     }// LoadingView()
 
     /**
-     * If you override this method, you must call {@code super.onPreExecute()} at beginning of the method.
+     * If you override this method, you must call its super method at beginning of the method.
      */
     @Override
     @CallSuper
@@ -77,7 +77,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
     }// onPreExecute()
 
     /**
-     * If you override this method, you must call {@code super.onPostExecute(result)} at beginning of the method.
+     * If you override this method, you must call its super method at beginning of the method.
      */
     @Override
     @CallSuper
@@ -86,7 +86,7 @@ public abstract class LoadingView<Params, Progress, Result> extends AsyncTask<Pa
     }// onPostExecute()
 
     /**
-     * If you override this method, you must call {@code super.onCancelled()} at beginning of the method.
+     * If you override this method, you must call its super method at beginning of the method.
      */
     @Override
     @CallSuper
