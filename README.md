@@ -1,7 +1,7 @@
 # android-lockpattern
 
 * License: [Apache License v2.0]
-* Version: `6.0.0` (October 10th, 2015)
+* Version: `7.0.0`
 * Project page: <http://haibison.github.io/android-lockpattern/>
 * Demo: <https://play.google.com/store/apps/details?id=group.pals.android.lib.ui.lockpattern.demo>
 * For developers: [Wiki], [API documentation].
@@ -16,22 +16,20 @@
 * Designed for both *phones and tablets*.
 * Stealth mode (invisible pattern).
 * Many built-in themes:
-  * Dark/Light
-  * Light with dark action bar (available from API 7+, but only works from API 14+)
-  * Dark/Light dialogs
-  * Dark/Light `DialogWhenLarge` (available from API 7+, but only works from API 11+)
+    + Dark/Light
+    + Light with dark action bar (available from API 7+, but only works from API 14+)
+    + Dark/Light dialogs
+    + Dark/Light `DialogWhenLarge` (available from API 7+, but only works from API 11+)
 * Ability to generate and let the user verify CAPTCHA pattern.
 
 --
 
-In short, you can use this library in your closed source/commercial apps with or without our knowledge. Hope you enjoy
-it  :-)
+In short, you can use this library in your closed source/commercial apps with or without our knowledge. Hope you enjoy it  :-)
 
 
 # Credits
 
-We sincerely thank all of our friends -- who have been contributing to this project.  We hope this project will be
-always useful for everyone.
+We sincerely thank all of our friends -- who have been contributing to this project.  We hope this project will be always useful for everyone.
 
 * C
 * [Steven Byle](http://stackoverflow.com/users/1507439/steven-byle)
@@ -43,6 +41,11 @@ always useful for everyone.
 
 
 # History
+
+* Version 7.0.0
+    + *Release: October 28th, 2015*
+    + Made dependency `support-annotations` always latest version.
+    + Removed `LoadingDialog`.
 
 * Version 6.0.0
     + *Release: October 10th, 2015*
