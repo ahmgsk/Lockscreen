@@ -12,6 +12,9 @@
     "sub_packages": [
         "haibison"
     ],
+	"exclude": [
+		"haibison.android.lockpattern.R"
+	],
     "window_title": "android-lockpattern",
     "doc_title": "<a href=\"https://github.com/haibison/android-lockpattern\" target=\"_blank\">android-lockpattern</a>",
     "doc_header": "<a href=\"https://github.com/haibison/android-lockpattern\" target=\"_blank\">android-lockpattern on GitHub</a>",
