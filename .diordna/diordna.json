@@ -3,8 +3,7 @@
     "target": "../apidocs",
     "source_paths": [
         "app/src/main/java",
-        "app/build/generated/source/buildConfig/release",
-        "app/build/generated/source/r/release"
+        "app/build/generated/source/buildConfig/release"
     ],
     "sdk_classpaths": [
         "extras/android/support/annotations/android-support-annotations.jar"
@@ -12,9 +11,6 @@
     "sub_packages": [
         "haibison"
     ],
-	"exclude": [
-		"haibison.android.lockpattern.R"
-	],
     "window_title": "android-lockpattern",
     "doc_title": "<a href=\"https://github.com/haibison/android-lockpattern\" target=\"_blank\">android-lockpattern</a>",
     "doc_header": "<a href=\"https://github.com/haibison/android-lockpattern\" target=\"_blank\">android-lockpattern on GitHub</a>",
