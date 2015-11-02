@@ -105,7 +105,7 @@ if __FILE__ == $0
     # Add Google Analytics script
     print_separator " > HANDLING GOOGLE ANALYTICS...\n"
     dir_apidocs = File.join(File.dirname(File.dirname(File.realpath($0))), 'apidocs')
-    ga_js_full_path = Pathname.new File.join(File.dirname(dir_apidocs), '.google-analytics.js')
+    ga_js_full_path = Pathname.new File.join(File.dirname(dir_apidocs), 'google-analytics.js')
     add_google_analytics_script ga_js_full_path, dir_apidocs
 
     print_separator " > DONE"
