@@ -43,9 +43,9 @@ public class Randoms {
      *
      * @return the random integer.
      */
-    public static int i() {
+    public static int randInt() {
         return RANDOM.nextInt((int) (System.nanoTime() % Integer.MAX_VALUE));
-    }//i()
+    }// randInt()
 
     /**
      * Generates a random integer within {@code [0, n)}.
@@ -53,9 +53,9 @@ public class Randoms {
      * @param n an arbitrary value.
      * @return the random integer.
      */
-    public static int i(int n) {
-        return n > 0 ? i() % n : 0;
-    }//i()
+    public static int randInt(int n) {
+        return n > 0 ? randInt() % n : 0;
+    }// randInt()
 
     /**
      * Generates a random integer array which has length of {@code end - start}, and is filled by all values from {@code start} to {@code
@@ -66,7 +66,7 @@ public class Randoms {
      * @return the random integer array. If {@code end <= start}, an empty array returns.
      */
     @NonNull
-    public static int[] intArray(int start, int end) {
+    public static int[] randIntArray(int start, int end) {
         if (end <= start) return new int[0];
 
         final List<Integer> values = Lists.newArrayList();
@@ -74,13 +74,13 @@ public class Randoms {
 
         final int[] result = new int[values.size()];
         for (int i = 0; i < result.length; i++) {
-            int k = i(values.size());
+            int k = randInt(values.size());
             result[i] = values.get(k);
             values.remove(k);
         }// for
 
         return result;
-    }//intArray()
+    }// randIntArray()
 
     /**
      * Generates a random integer array which has length of {@code end}, and is filled by all values from {@code 0} to {@code end - 1} in
@@ -90,8 +90,8 @@ public class Randoms {
      * @return the random integer array. If {@code end <= start}, an empty array returns.
      */
     @NonNull
-    public static int[] intArray(int end) {
-        return intArray(0, end);
-    }//intArray()
+    public static int[] randIntArray(int end) {
+        return randIntArray(0, end);
+    }// randIntArray()
 
 }
